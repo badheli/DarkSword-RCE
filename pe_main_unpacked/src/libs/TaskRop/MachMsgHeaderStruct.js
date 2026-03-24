@@ -1,3 +1,9 @@
+/***/ "./src/libs/TaskRop/MachMsgHeaderStruct.js":
+/*!*************************************************!*\
+  !*** ./src/libs/TaskRop/MachMsgHeaderStruct.js ***!
+  \*************************************************/
+/***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
+
 __webpack_require__.r(__webpack_exports__);
 /* harmony export */ __webpack_require__.d(__webpack_exports__, {
 /* harmony export */   "default": () => (/* binding */ MachMsgHeaderStruct)
@@ -24,7 +30,7 @@ class MachMsgHeaderStruct
 
 	get msgh_voucher_port() { return this.#dataView.getUint32(16,true); }
 	set msgh_voucher_port(value) { this.#dataView.setUint32(16,value,true); }
-
+	
 	get msgh_id() { return this.#dataView.getUint32(20,true); }
 	set msgh_id(value) { this.#dataView.setUint32(20,value,true); }
 
@@ -33,3 +39,5 @@ class MachMsgHeaderStruct
 		return ((remote) | ((local) << 8));
 	}
 }
+
+/***/ }),

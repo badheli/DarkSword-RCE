@@ -1,3 +1,9 @@
+/***/ "./src/libs/TaskRop/RegistersStruct.js":
+/*!*********************************************!*\
+  !*** ./src/libs/TaskRop/RegistersStruct.js ***!
+  \*********************************************/
+/***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
+
 __webpack_require__.r(__webpack_exports__);
 /* harmony export */ __webpack_require__.d(__webpack_exports__, {
 /* harmony export */   "default": () => (/* binding */ RegistersStruct)
@@ -12,7 +18,7 @@ class RegistersStruct
 		this.#dataView = new DataView(buffer,offset, length * 8);
 		this.length = length;
 	}
-
+    
 	get(index) {
         if (index >= this.length || index < 0) {
             console.log(TAG,`Got wrong index in get:${index}`);
@@ -29,3 +35,5 @@ class RegistersStruct
         this.#dataView.setBigUint64(index * 8, BigInt(value), true); // true for little-endian
     }
 }
+
+/***/ }),

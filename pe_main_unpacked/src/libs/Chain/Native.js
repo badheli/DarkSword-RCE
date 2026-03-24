@@ -1,3 +1,9 @@
+/***/ "./src/libs/Chain/Native.js":
+/*!**********************************!*\
+  !*** ./src/libs/Chain/Native.js ***!
+  \**********************************/
+/***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
+
 __webpack_require__.r(__webpack_exports__);
 /* harmony export */ __webpack_require__.d(__webpack_exports__, {
 /* harmony export */   "default": () => (/* binding */ Native)
@@ -248,3 +254,6 @@ class Native {
 
 // Register global Native class
 globalThis.Native = Native;
+
+
+/***/ }),

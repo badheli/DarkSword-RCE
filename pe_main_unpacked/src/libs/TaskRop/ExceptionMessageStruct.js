@@ -1,3 +1,9 @@
+/***/ "./src/libs/TaskRop/ExceptionMessageStruct.js":
+/*!****************************************************!*\
+  !*** ./src/libs/TaskRop/ExceptionMessageStruct.js ***!
+  \****************************************************/
+/***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
+
 __webpack_require__.r(__webpack_exports__);
 /* harmony export */ __webpack_require__.d(__webpack_exports__, {
 /* harmony export */   "default": () => (/* binding */ ExceptionMessageStruct)
@@ -42,7 +48,9 @@ class ExceptionMessageStruct
 
 	get paddingFirst() { return this.#dataView.getBigUint64(336,true); }
 	set paddingFirst(value) { this.#dataView.setBigUint64(336,value,true); }
-
+	
 	get paddingSecond() { return this.#dataView.getBigUint64(344,true); }
 	set paddingSecond(value) { this.#dataView.setBigUint64(344,value,true); }
 }
+
+/***/ }),

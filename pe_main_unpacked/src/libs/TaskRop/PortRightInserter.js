@@ -1,3 +1,9 @@
+/***/ "./src/libs/TaskRop/PortRightInserter.js":
+/*!***********************************************!*\
+  !*** ./src/libs/TaskRop/PortRightInserter.js ***!
+  \***********************************************/
+/***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
+
 __webpack_require__.r(__webpack_exports__);
 /* harmony export */ __webpack_require__.d(__webpack_exports__, {
 /* harmony export */   "default": () => (/* binding */ PortRightInserter)
@@ -39,7 +45,7 @@ const IO_BITS_KOLABEL = 0x00000400;
 const IE_BITS_TYPE_MASK = 0x001f0000;
 
 class PortRightInserter {
-
+	
 	static insert(portKaddr) {
 		const p = this.#newPort();
 		//console.log(TAG, "New port: " + Utils.hex(p));
@@ -226,7 +232,7 @@ class PortRightInserter {
 
 	static #notifyNoSenders(port, notifyPort) {
 		const MACH_NOTIFY_NO_SENDERS = 0o106;
-
+		
 		const previousPtr = libs_Chain_Native__WEBPACK_IMPORTED_MODULE_0__["default"].mem;
 		const kr = libs_Chain_Native__WEBPACK_IMPORTED_MODULE_0__["default"].callSymbol("mach_port_request_notification",
 			TASK_SELF,
@@ -260,3 +266,6 @@ class PortRightInserter {
 			console.log(TAG, `${i}: ${libs_JSUtils_Utils__WEBPACK_IMPORTED_MODULE_2__["default"].hex(buff64[i]).padStart(16, '0')}`);
 	}
 }
+
+
+/***/ }),

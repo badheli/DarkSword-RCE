@@ -1,3 +1,9 @@
+/***/ "./src/InjectJS.js":
+/*!*************************!*\
+  !*** ./src/InjectJS.js ***!
+  \*************************/
+/***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
+
 __webpack_require__.r(__webpack_exports__);
 /* harmony export */ __webpack_require__.d(__webpack_exports__, {
 /* harmony export */   "default": () => (/* binding */ InjectJS)
@@ -146,7 +152,7 @@ class InjectJS {
 		this.task.call(100, "JSObjectSetProperty", jsctx, globalObject, jsName, nativeCallBuff);
 
 		let localCallBuff = new BigUint64Array(33);
-
+		
 		// Second (final) __invoking__ arguments
 		localCallBuff[0] = 0x41414141n;	// this should be overwritten at every function call
 		localCallBuff[1] = resultBuff; // Result buffer
@@ -222,7 +228,7 @@ class InjectJS {
 		// this.task.read(b, a, this.#injectCode.length + 1);
 		// const c = Native.readString(a, this.#injectCode.length);
 		// console.log(TAG, c);
-
+		
 
 		//const loaderStr = this.#writeCFStr(mem, "loader");
 		//this.#callObjc(jscontext, "setObject:forKeyedSubscript:", scriptStr, loaderStr);
@@ -325,3 +331,6 @@ class InjectJS {
 		console.log(TAG, "class: " + classDesc);
 	}
 }
+
+
+/***/ }),

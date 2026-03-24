@@ -1,3 +1,9 @@
+/***/ "./src/libs/TaskRop/VmMapEntry.js":
+/*!****************************************!*\
+  !*** ./src/libs/TaskRop/VmMapEntry.js ***!
+  \****************************************/
+/***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
+
 __webpack_require__.r(__webpack_exports__);
 /* harmony export */ __webpack_require__.d(__webpack_exports__, {
 /* harmony export */   "default": () => (__WEBPACK_DEFAULT_EXPORT__),
@@ -148,4 +154,7 @@ class vm_map_entry {
     get user_wired_count() { return this.#__view.getUint16(this.#__off+0x4e, true); }
     set user_wired_count(val) { this.#__view.setUint16(this.#__off+0x4e, val, true); }
 };
-export default {vm_map_entry,vm_map_links,vm_map_store};
+/* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = ({vm_map_entry,vm_map_links,vm_map_store});
+
+
+/***/ }),
