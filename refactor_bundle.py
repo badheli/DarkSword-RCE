@@ -24,9 +24,9 @@ def process_bundle_content(content: str, output_dir: Path, input_file_path: Path
      re.DOTALL
  )
 
- # --- FIX: Make regex more specific by looking for 'webpackBootstrap' keyword ---
- nested_bundle_regex = re.compile(
-     r'const __WEBPACK_DEFAULT_EXPORT__ = \("(?=.*webpackBootstrap)((?:.|\s)*?)"\);?',
+ # This regex just finds raw-loaded strings, it no longer tries to guess if it's a bundle.
+ raw_string_regex = re.compile(
+     r'const __WEBPACK_DEFAULT_EXPORT__ = \("((?:.|\s)*?)"\);?',
      re.DOTALL
  )
 
@@ -40,29 +40,39 @@ def process_bundle_content(content: str, output_dir: Path, input_file_path: Path
      clean_path_str = clean_path_str.replace('!', '_')
      output_file_path = output_dir / clean_path_str
      
-     nested_match = nested_bundle_regex.search(raw_code)
+     # Check if the module's code is a raw-loaded string export
+     raw_content_match = raw_string_regex.search(raw_code)
      
-     if nested_match:
-         print(f"{prefix} Found nested bundle in module: {module_path_str}")
-         nested_bundle_string = nested_match.group(1)
-         nested_content = unescape_js_string(nested_bundle_string)
-         process_bundle_content(nested_content, output_dir, input_file_path, None, recursion_level + 1)
-     else:
-         # Now, modules like icloud_dumper.js will be treated as regular modules.
-         # The 'code' will be `const __WEBPACK_DEFAULT_EXPORT__ = ("...content...")`
-         # We should extract the string content for these raw-loaded modules.
-         raw_content_match = re.search(r'const __WEBPACK_DEFAULT_EXPORT__ = \("((?:.|\s)*?)"\);?', raw_code, re.DOTALL)
-         if raw_content_match:
-              # It's a raw-loaded string, extract the content of the string.
-             final_code = unescape_js_string(raw_content_match.group(1))
-             print(f"{prefix} -> Extracted raw string module to: {output_file_path}")
+     is_processed = False
+     if raw_content_match:
+         # It's a raw-loaded module. Now decide if it's a nested bundle or just a plain string.
+         string_content_escaped = raw_content_match.group(1)
+         string_content_unescaped = unescape_js_string(string_content_escaped)
+
+         # --- FIX: Use a much more robust heuristic to detect a nested bundle ---
+         if string_content_unescaped.strip().startswith('/******/ (() => { // webpackBootstrap'):
+             print(f"{prefix} Found nested bundle in module: {module_path_str}")
+             is_processed = True
+             process_bundle_content(string_content_unescaped, output_dir, input_file_path, None, recursion_level + 1)
          else:
-             # It's a normal code module, clean it.
-             dedented_code = textwrap.dedent(raw_code)
-             export_pattern = r'/\* harmony default export \*/\s*const __WEBPACK_DEFAULT_EXPORT__ = \((.+)\);?'
-             processed_code = re.sub(r'(?s)' + export_pattern, r'export default \1;', dedented_code)
-             final_code = processed_code.strip()
-             print(f"{prefix} -> Extracted regular module to: {output_file_path}")
+             # It's just a raw string file. Save the unescaped content.
+             final_code = string_content_unescaped
+             print(f"{prefix} -> Extracted raw string module to: {output_file_path}")
+             is_processed = True
+             output_file_path.parent.mkdir(parents=True, exist_ok=True)
+             try:
+                 with open(output_file_path, 'w', encoding='utf-8') as out_f:
+                     out_f.write(final_code)
+             except Exception as e:
+                 print(f"{prefix} [!] Could not write file '{output_file_path}'. Reason: {e}")
+
+     if not is_processed:
+         # It's a normal code module
+         dedented_code = textwrap.dedent(raw_code)
+         export_pattern = r'/\* harmony default export \*/\s*const __WEBPACK_DEFAULT_EXPORT__ = \((.+)\);?'
+         processed_code = re.sub(r'(?s)' + export_pattern, r'export default \1;', dedented_code)
+         final_code = processed_code.strip()
+         print(f"{prefix} -> Extracted regular module to: {output_file_path}")
 
          output_file_path.parent.mkdir(parents=True, exist_ok=True)
          try:
