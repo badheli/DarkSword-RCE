@@ -13,16 +13,16 @@
     function LOG(msg) {
         if (true) log('sbx1: ' + msg);
     }
-    let wc_get_cstring = function(js_str) {
+    let wc_get_cstring = function (js_str) {
         let s = js_str + "\x00";
         resolve_rope(s);
         return wc_uread64(wc_uread64(addrof(s) + 0x8n) + 0x8n);
     };
-    let get_cstring = function(js_str) {
+    let get_cstring = function (js_str) {
         let gpu_cstr = gpuCopyBuffer(wc_get_cstring(js_str), BigInt(js_str.length) + 1n);
         return gpu_cstr;
     };
-    let func_resolve = function(symbol) {
+    let func_resolve = function (symbol) {
         return gpuDlsym(0xFFFFFFFFFFFFFFFEn, symbol);
     };
     let GPU_CALLOC = func_resolve("calloc");
@@ -4272,8 +4272,8 @@
             save_x0_gadget = new_save_x0_gadget;
             save_x0_gadget_data = new_save_x0_gadget_data;
         }
-    } else {}
-    const ios_version = function() {
+    } else { }
+    const ios_version = function () {
         let version = /iPhone OS ([0-9_]+)/g.exec(navigator.userAgent)?.[1];
         if (version) {
             version = version.split('_').map(part => parseInt(part));
@@ -5330,7 +5330,7 @@
 
     function oxpc_dictionary_type_descriptor() {
         let desc = {};
-        desc["serialized_size"] = function(dict) {
+        desc["serialized_size"] = function (dict) {
             oxpc_check_type(dict, OXPC_TYPE_DICTIONARY);
             if (dict["serialized_size"] != 0n) {
                 return dict["serialized_size"];
@@ -5353,7 +5353,7 @@
             dict["serialized_size"] = oxpc_dictionary_serialized_t["_size"] + total;
             return dict["serialized_size"];
         };
-        desc["serialize_to_buffer"] = function(dict, buffer, ports) {
+        desc["serialize_to_buffer"] = function (dict, buffer, ports) {
             oxpc_check_type(dict, OXPC_TYPE_DICTIONARY);
             let serialized_dict = buffer;
             struct_field_set(oxpc_dictionary_serialized_t, serialized_dict, "type", dict["type"]);
@@ -5375,11 +5375,11 @@
 
     function oxpc_null_type_descriptor() {
         let desc = {};
-        desc["serialized_size"] = function(obj) {
+        desc["serialized_size"] = function (obj) {
             oxpc_check_type(obj, OXPC_TYPE_NULL);
             return oxpc_null_t["_size"];
         };
-        desc["serialize_to_buffer"] = function(obj, buffer, ports) {
+        desc["serialize_to_buffer"] = function (obj, buffer, ports) {
             oxpc_check_type(obj, OXPC_TYPE_NULL);
             uwrite_bitsize(buffer, OXPC_TYPE_NULL, 32n);
         };
@@ -7100,7 +7100,7 @@
     }
     LOG("closing remaker_connection: " + remaker_connection);
     xpc_connection_cancel(remaker_connection);
-    LOG = function(msg) {
+    LOG = function (msg) {
         log('sbx0: ' + msg);
     };
     sbx1_end = Date.now();

@@ -8407,9 +8407,9 @@
                 return chunk;
             }
 
-            function gpu_fcall_enable_sleep() {}
+            function gpu_fcall_enable_sleep() { }
 
-            function gpu_fcall_disable_sleep() {}
+            function gpu_fcall_disable_sleep() { }
             LOG(`going to suspend the spinners in the GPU`);
             const backend2_thread_port = gpu_read64(backend2_processingThread + 0x34n) & 0xffffffffn;
             LOG(`backend2_thread_port: ${backend2_thread_port.hex()}`);
@@ -8449,7 +8449,7 @@
                 const gpuWrite64 = gpu_write64;
                 const gpuFcall = gpu_fcall;
                 const gpuDlsym = gpu_dlsym;
-                const gpuPaciza = function(ptr) {
+                const gpuPaciza = function (ptr) {
                     return gpu_pacia(ptr, 0n);
                 };
                 const gpuPacia = gpu_pacia;

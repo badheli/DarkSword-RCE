@@ -5,34 +5,34 @@ const u32 = new Uint32Array(ab);
 const u8 = new Uint8Array(ab);
 const f64 = new Float64Array(ab);
 
-BigInt.fromDouble = function(v) {
+BigInt.fromDouble = function (v) {
     f64[0] = v;
     return u64[0];
 };
-BigInt.fromBytes = function(bytes) {
+BigInt.fromBytes = function (bytes) {
     for (let i = 0; i < 8; ++i) {
         u8[i] = bytes[i];
     }
     return u64[0];
 };
-BigInt.prototype.hex = function() {
+BigInt.prototype.hex = function () {
     let s = '0x' + this.toString(16);
     return s;
 };
-BigInt.prototype.asDouble = function() {
+BigInt.prototype.asDouble = function () {
     u64[0] = this;
     return f64[0];
 };
-BigInt.prototype.add = function(other) {
+BigInt.prototype.add = function (other) {
     return this + other;
 };
-BigInt.prototype.sub = function(other) {
+BigInt.prototype.sub = function (other) {
     return this - other;
 }
-BigInt.prototype.noPAC = function() {
+BigInt.prototype.noPAC = function () {
     return this & 0x7fffffffffn;
 }
-BigInt.prototype.asInt32s = function() {
+BigInt.prototype.asInt32s = function () {
     u64[0] = this;
     let lo = u32[0];
     let hi = u32[1];
@@ -2874,7 +2874,7 @@ class check_attempt {
 
         const executable = read64(addrof(parseFloat) + 0x18n);
         globalFuncParseFloat = read64(executable + 0x28n).noPAC();
-        const jsc_base = (function() {
+        const jsc_base = (function () {
             let jsc_base = globalFuncParseFloat & ~0xfffn;
 
             while (1) {

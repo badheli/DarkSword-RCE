@@ -65,7 +65,7 @@ const dlopen_worker_blob = new Blob([dlopen_worker], {
     type: 'application/javascript'
 });
 const dlopen_worker_url = URL.createObjectURL(dlopen_worker_blob);
-const ios_version = (function() {
+const ios_version = (function () {
     let version = /iPhone OS ([0-9_]+)/g.exec(navigator.userAgent)?.[1];
     if (version) {
         return version.split('_').map(part => parseInt(part));
