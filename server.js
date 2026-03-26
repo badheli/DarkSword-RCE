@@ -19,6 +19,7 @@ const server = http.createServer((req, res) => {
   const ext = path.extname(filePath)
 
   fs.readFile(filePath, (err, data) => {
+    console.log(`readFile:${filePath}`)
     if (err) {
       res.writeHead(404)
       res.end('Not found')
