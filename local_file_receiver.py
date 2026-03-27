@@ -69,6 +69,5 @@ with socketserver.TCPServer(("", PORT), Handler) as httpd:
     try:
         httpd.serve_forever()
     except KeyboardInterrupt:
-        print("
-Stopping server.")
+        print("Stopping server.")
         httpd.shutdown()
