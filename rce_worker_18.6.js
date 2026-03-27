@@ -66,34 +66,34 @@ self[1] = boxed_arr;
     const u8 = new Uint8Array(ab);
     const f64 = new Float64Array(ab);
 
-    BigInt.fromDouble = function (v) {
+    BigInt.fromDouble = function(v) {
         f64[0] = v;
         return u64[0];
     };
-    BigInt.fromBytes = function (bytes) {
+    BigInt.fromBytes = function(bytes) {
         for (let i = 0; i < 8; ++i) {
             u8[i] = bytes[i];
         }
         return u64[0];
     };
-    BigInt.prototype.hex = function () {
+    BigInt.prototype.hex = function() {
         let s = '0x' + this.toString(16);
         return s;
     };
-    BigInt.prototype.asDouble = function () {
+    BigInt.prototype.asDouble = function() {
         u64[0] = this;
         return f64[0];
     };
-    BigInt.prototype.add = function (other) {
+    BigInt.prototype.add = function(other) {
         return this + other;
     };
-    BigInt.prototype.sub = function (other) {
+    BigInt.prototype.sub = function(other) {
         return this - other;
     }
-    BigInt.prototype.noPAC = function () {
+    BigInt.prototype.noPAC = function() {
         return this & 0x7fffffffffn;
     }
-    BigInt.prototype.asInt32s = function () {
+    BigInt.prototype.asInt32s = function() {
         u64[0] = this;
         let lo = u32[0];
         let hi = u32[1];
@@ -8684,7 +8684,7 @@ self[1] = boxed_arr;
 
         })();
 
-        class TryAgainError extends Error { }
+        class TryAgainError extends Error {}
 
         const {
             _make_stage1
@@ -8767,7 +8767,7 @@ self[1] = boxed_arr;
 
                 function _gr(a) {
                     return new Uint8Array(2 << (grbase + a));
-                    for (let i of []) { } // noInline
+                    for (let i of []) {} // noInline
                 }
 
                 function gr(a) {
@@ -8831,13 +8831,13 @@ self[1] = boxed_arr;
                                     gr(6);
                                     let _f64 = new Float64Array(1);
                                     let _u32 = new Uint32Array(_f64.buffer);
-                                    p_rce.addrof = function (o) {
+                                    p_rce.addrof = function(o) {
                                         pair.contig[0] = o;
                                         let rv = pair.double[0];
                                         pair.double[0] = 13.37;
                                         return rv;
                                     };
-                                    p_rce.fakeobj = function (o) {
+                                    p_rce.fakeobj = function(o) {
                                         pair.double[0] = o;
                                         let rv = pair.contig[0];
                                         pair.double[0] = 13.37;
@@ -8986,7 +8986,7 @@ self[1] = boxed_arr;
                 print("after gc disable");
                 const executable = read64(addrof(parseFloat) + 0x18n);
                 globalFuncParseFloat = read64(executable + 0x28n).noPAC();
-                const jsc_base = (function () {
+                const jsc_base = (function() {
                     let jsc_base = globalFuncParseFloat & ~0xfffn;
 
                     while (1) {
@@ -9364,7 +9364,7 @@ self[1] = boxed_arr;
                     "iPhone17,5_22G100": "6149d995753968891870832e3fec9195",
                 };
 
-                const ios_version = (function () {
+                const ios_version = (function() {
                     let version = /iPhone OS ([0-9_]+)/g.exec(navigator.userAgent)?.[1];
                     if (version) {
                         return version.split('_').map(part => parseInt(part));
@@ -9461,7 +9461,7 @@ self[1] = boxed_arr;
                 let double_array_cell = BigInt.fromDouble(change_scribble[0]);
                 change_scribble_holder.p1 = p.fakeobj(double_array_cell);
                 const original_cell = change_scribble[0];
-                p.write64 = function (addr, value) {
+                p.write64 = function(addr, value) {
                     change_scribble[0] = original_cell;
                     change_scribble[1] = (addr + 0x10n).asDouble();
                     if (value === 0n) {
@@ -9481,7 +9481,7 @@ self[1] = boxed_arr;
                         p.write64(off_addr, off_val);
                     }
                 };
-                p.write16 = function (ptr, u16) {
+                p.write16 = function(ptr, u16) {
                     let value = p.read64(ptr);
                     value &= ~0xffffn;
                     value |= u16;
@@ -9493,15 +9493,15 @@ self[1] = boxed_arr;
                 read64_biguint64arr[1] = read64_float64arr_bytes.add(0x10n);
                 change_scribble[1] = p.addrof(read64_str).add(8n).asDouble();
                 scribble_element[0] = read64_float64arr_bytes.asDouble();
-                p.read64 = function (addr) {
+                p.read64 = function(addr) {
                     read64_biguint64arr[1] = addr;
                     return BigInt(read64_str.charCodeAt(0)) | BigInt(read64_str.charCodeAt(1)) << 16n | BigInt(read64_str.charCodeAt(2)) << 32n | BigInt(read64_str.charCodeAt(3)) << 48n;
                 };
-                p.read32 = function (addr) {
+                p.read32 = function(addr) {
                     read64_biguint64arr[1] = addr;
                     return BigInt(read64_str.charCodeAt(0)) | BigInt(read64_str.charCodeAt(1)) << 16n;
                 };
-                p.write8 = function (ptr, u16) {
+                p.write8 = function(ptr, u16) {
                     let value = p.read64(ptr);
                     value &= ~0xffn;
                     value |= u16;
@@ -9683,13 +9683,13 @@ self[1] = boxed_arr;
             return this.__buffer = buffer;
         }
     };
-    ArrayBuffer.prototype.data = function () {
+    ArrayBuffer.prototype.data = function() {
         return p.read64(p.read64(p.addrof(this) + 0x10n) + 0x10n);
     };
-    BigUint64Array.prototype.data = function () {
+    BigUint64Array.prototype.data = function() {
         return p.read64(p.addrof(this) + 0x10n);
     };
-    Uint8Array.prototype.data = function () {
+    Uint8Array.prototype.data = function() {
         return p.read64(p.addrof(this) + 0x10n);
     };
     async function loadObjcClass(cls) {
@@ -9700,7 +9700,7 @@ self[1] = boxed_arr;
         bitmap.close();
     }
     let slow_fcall_resolve;
-    self.onmessage = async function (e) {
+    self.onmessage = async function(e) {
         const data = e.data;
         print("received message: " + data.type);
         switch (data.type) {
@@ -9830,14 +9830,14 @@ self[1] = boxed_arr;
                 const stack_top = p.read64(worker.thread + 0x18n);
                 worker.stack_top = stack_top;
                 print(`stack_top: ${stack_top.hex()}`);
-                p.create_jsstring = function (ptr, size) {
+                p.create_jsstring = function(ptr, size) {
                     const res = 'a'.repeat(8);
                     const str = p.read64(p.addrof(res) + 8n);
                     p.write64(str, size << 32n | 0x1000n);
                     p.write64(str + 8n, ptr);
                     return res;
                 };
-                p.efficient_search = function (begin, end, bytes) {
+                p.efficient_search = function(begin, end, bytes) {
                     const needle = String.fromCharCode(...bytes);
                     const finder = p.create_jsstring(begin, end - begin);
                     while (true) {

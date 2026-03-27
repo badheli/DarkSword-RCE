@@ -442,7 +442,7 @@
     let IOSURFACEGETBASEADDRESS = func_resolve("IOSurfaceGetBaseAddress");
     let kIOSurfaceAllocSize = uread64(func_resolve("kIOSurfaceAllocSize").noPAC());
 
-    function DUMP(addr, sz) { }
+    function DUMP(addr, sz) {}
 
     function js_malloc(sz) {
         buff = new Uint8Array(BigInt(sz).asInt32s).fill(0x00);
@@ -1457,19 +1457,19 @@
     mpd_kwrite_length = kwrite_length;
     mpd_kread_length = kread_length;
     mpd_kwrite_zone_element = kwrite_zone_element;
-    mpd_control_socket = function () {
+    mpd_control_socket = function() {
         return control_socket;
     }
-    mpd_rw_socket = function () {
+    mpd_rw_socket = function() {
         return rw_socket;
     }
-    mpd_pacia_gadget = function () {
+    mpd_pacia_gadget = function() {
         return dyld_signPointer_gadget;
     }
-    mpd_kernel_slide = function (addr = 0n) {
+    mpd_kernel_slide = function(addr = 0n) {
         return addr + kernel_slide;
     };
-    mpd_kernel_base = function () {
+    mpd_kernel_base = function() {
         return kernel_base;
     };
     pe();

